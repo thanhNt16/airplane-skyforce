@@ -6,6 +6,7 @@ import java.awt.image.BufferStrategy;
 
 import computer_master_display.Display;
 import computer_master_manager.GameManager;
+import hust.ict.graphics.LoadImage;
 
 public class GameSetup implements Runnable {
 	private String title;
@@ -30,6 +31,7 @@ public class GameSetup implements Runnable {
 	
 	public void init() {
 		display = new Display(title, width, height);
+		LoadImage.init();
 		manager = new GameManager();
 		manager.init();
 	}
@@ -71,8 +73,7 @@ public class GameSetup implements Runnable {
 		g.clearRect(0, 0, width, height);
 		//draw
 		
-		g.setColor(Color.WHITE);
-		g.fillRect(50, 50, gameWidth, gameHeight);
+		g.drawImage(LoadImage.image, 50, 50, gameWidth, gameHeight, null);
 		manager.render(g);
 		//end of draw
 		buffer.show();
