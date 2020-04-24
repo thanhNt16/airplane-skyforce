@@ -1,4 +1,4 @@
-package computer_master_bullets;
+package hust.ict.bullet;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -34,9 +34,10 @@ public class Bullet {
 		y -= speed;
 	}
 	public void render(Graphics g) {
-		g.setColor(Color.blue);
+		g.setColor(Color.red);
 		g.fillRect(x, y, 6, 10);
 	}
 	
 	
 }
+

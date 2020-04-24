@@ -1,7 +1,9 @@
-package computer_master_enemy;
+package hust.ict.enemy;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import hust.ict.graphics.LoadImage;
 
 public class Enemy {
 	private int x;
@@ -31,6 +33,6 @@ public class Enemy {
 	}
 	public void render(Graphics g) {
 		g.setColor(Color.black);
-		g.fillOval(x, y, 25, 25);
+		g.drawImage(LoadImage.enemy, x, y, 25, 25, null);
 	}
 }

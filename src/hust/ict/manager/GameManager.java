@@ -1,13 +1,15 @@
-package computer_master_manager;
+package hust.ict.manager;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
-import computer_master_bullets.Bullet;
-import computer_master_enemy.Enemy;
-import computer_master_entitty.Player;
-import computer_master_setup.GameSetup;
+import hust.ict.bullet.Bullet;
+import hust.ict.enemy.Enemy;
+import hust.ict.entity.Player;
+import hust.ict.setup.GameSetup;
 
 public class GameManager {
 	private Player player;
@@ -17,6 +19,7 @@ public class GameManager {
 	private long delay;
 	private long current;
 	private int health;
+	private int score = 0;
 	
 	public GameManager() {
 		
@@ -65,7 +68,7 @@ public class GameManager {
 			bullet.get(i).render(g);
 		}
 		for (int i = 0 ; i < bullet.size(); i++) {
-			if (bullet.get(i).getY() < 50) {
+			if (bullet.get(i).getY() <= 50) {
 				bullet.remove(i);
 				i--;
 			}
@@ -73,8 +76,8 @@ public class GameManager {
 		
 		// enemies
 		for (int i = 0; i < enemies.size(); i++) {
-			if (!(enemies.get(i).getX() <= 50  || enemies.get(i).getX() >= 450  - 25
-					|| enemies.get(i).getY() >=450 - 25)) {
+			if (!(enemies.get(i).getX() <= 50  || enemies.get(i).getX() >= 450  - 30
+					|| enemies.get(i).getY() >=450 - 30)) {
 				if (enemies.get(i).getY() >= 50) {
 					enemies.get(i).render(g);	
 				}
@@ -87,11 +90,12 @@ public class GameManager {
 			
 			int px = player.getX();
 			int py = player.getY();
-			if (px < ex + 25 && px + 30 > ex && 
-					py < ey + 25 && py + 30 > ey) {
+			if (px <= ex + 25 && px + 25 >= ex && 
+					py <= ey + 25 && py + 25 >= ey) {
 				enemies.remove(i);
 				i--;
 				health--;
+				System.out.println("health " + health);
 				if (health <= 0) {
 					enemies.removeAll(enemies);
 					player.setHealth(0);
@@ -108,8 +112,12 @@ public class GameManager {
 					
 					bullet.remove(j);
 					j--;
+					score += 1;
 				}
 			}
+			g.setColor(Color.blue);
+			g.setFont(new Font("arial", Font.BOLD, 40));
+			g.drawString("Score: " + score, 70, 500);
 		}
 	}
 }

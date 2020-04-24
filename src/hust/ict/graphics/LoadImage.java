@@ -7,9 +7,15 @@ import javax.imageio.ImageIO;
 
 public class LoadImage {
 	public static BufferedImage image;
+	public static BufferedImage player;
+	public static BufferedImage enemy;
+	public static BufferedImage entities;
 	
 	public static void init() {
-		image = imageLoader("/sky.jpg");
+		image = imageLoader("/white.jpg");
+		player = imageLoader("/player.jpg");
+		entities = imageLoader("/airplane.png");
+		crop();
 	}
 	
 	public static BufferedImage imageLoader(String path) {
@@ -21,5 +27,8 @@ public class LoadImage {
 			System.exit(1);
 		}
 		return null;
+	}
+	public static void crop() {
+		enemy = entities.getSubimage(0, 0,85, 90);
 	}
 }

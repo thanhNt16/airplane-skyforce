@@ -1,4 +1,4 @@
-package computer_master_display;
+package hust.ict.display;
 
 import java.awt.Canvas;
 import java.awt.Color;

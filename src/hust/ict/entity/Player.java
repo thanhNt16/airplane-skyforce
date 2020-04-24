@@ -1,13 +1,14 @@
-package computer_master_entitty;
+package hust.ict.entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import computer_master_bullets.Bullet;
-import computer_master_display.Display;
-import computer_master_manager.GameManager;
+import hust.ict.bullet.Bullet;
+import hust.ict.display.Display;
+import hust.ict.graphics.LoadImage;
+import hust.ict.manager.GameManager;
 
 public class Player implements KeyListener {
 	private int x;
@@ -59,20 +60,20 @@ public class Player implements KeyListener {
 	public void tick() {
 		if (!(health <= 0)) {
 			if (left) {
-				if (x>=50) {
-					x-=1;	
+				if (x>=60) {
+					x-=4;	
 				}
 
 			}
 			if (right) {
-				if (x<= 450-30) {
-					x+=1;	
+				if (x<= 450-40) {
+					x+=4;	
 				}
 			}
 			if (fire) {
 				long breaks = (System.nanoTime() - current)/1000000;
 				if (breaks > delay) {
-					GameManager.bullet.add(new Bullet(x+11, y+10));	
+					GameManager.bullet.add(new Bullet(x+11, y+12));	
 					current = System.nanoTime();
 				}
 				
@@ -82,7 +83,7 @@ public class Player implements KeyListener {
 	public void render(Graphics g) {
 		if (!(health <=0)) {
 			g.setColor(Color.red);
-			g.fillRect(x, y, 30, 30);	
+			g.drawImage(LoadImage.player, x, y, 25, 25, null);	
 		}
 	}
 	public void keyPressed(KeyEvent e) {
@@ -109,6 +110,8 @@ public class Player implements KeyListener {
 			 fire = false;
 		}
 	}
+
+
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub

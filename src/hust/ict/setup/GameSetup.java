@@ -1,12 +1,11 @@
-package computer_master_setup;
+package hust.ict.setup;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-import computer_master_display.Display;
-import computer_master_manager.GameManager;
+import hust.ict.display.Display;
 import hust.ict.graphics.LoadImage;
+import hust.ict.manager.GameManager;
 
 public class GameSetup implements Runnable {
 	private String title;

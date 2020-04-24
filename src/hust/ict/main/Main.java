@@ -1,7 +1,6 @@
-package computer_master_main;
+package hust.ict.main;
 
-import computer_master_display.Display;
-import computer_master_setup.GameSetup;
+import hust.ict.setup.GameSetup;
 
 public class Main {
 	public static void main(String[]args) {
