@@ -1,7 +1,6 @@
 package server.game;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import server.communicate.Server;
 
 public class Enemy {
 	private int x;
@@ -29,8 +28,8 @@ public class Enemy {
 	public void tick() {
 		y+=1;
 	}
-	public void render(Graphics g) {
-		g.setColor(Color.black);
-		g.drawImage(LoadImage.enemy, x, y, 25, 25, null);
+	public void broadcast(int room) {
+		String message = "ENEMY__" + x + "__" + y + "__";
+		Server.broadcastToRoom(room, message);
 	}
 }

@@ -1,37 +1,23 @@
 package server.game;
 
-import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
-
+import server.communicate.Server;
 
 public class GameSetup implements Runnable {
-	private String title;
-	private int width;
-	private int height;
 	private Thread thread;
 	private boolean running;
-	private BufferStrategy buffer;
-	private Graphics g;
-	private int y;
 	
-	private Display display;
 	private GameManager manager;
 	public static final int gameWidth = 400;
 	public static final int gameHeight = 400;
 	
 	private int room;
 	
-	public GameSetup(String title, int width, int height, int room) {
-		this.title = title;
-		this.width = width;
-		this.height = height;
+	public GameSetup(int room) {
 		this.room = room;
 	}
 	
 	public void init() {
-		display = new Display(title, width, height);
-		LoadImage.init();
-		manager = new GameManager(room);
+		manager = new GameManager();
 		manager.init();
 	}
 	
@@ -62,22 +48,6 @@ public class GameSetup implements Runnable {
 		manager.tick();
 		
 	}
-	public void render() {
-		buffer = display.getCanvas().getBufferStrategy();
-		if (buffer == null) {
-			display.getCanvas().createBufferStrategy(3);
-			return;
-		}
-		g = buffer.getDrawGraphics();
-		g.clearRect(0, 0, width, height);
-		//draw
-		
-		g.drawImage(LoadImage.image, 50, 50, gameWidth, gameHeight, null);
-		manager.render(g);
-		//end of draw
-		buffer.show();
-		g.dispose();
-	}
 	
 	@Override
 	public void run() {
@@ -97,7 +67,8 @@ public class GameSetup implements Runnable {
 			if (delta >= 1) {
 
 				tick();
-				render();
+				manager.broadcast(room);
+				Server.broadcastToRoom(room, "END_FRAME__");
 				delta--;
 			}
 		}

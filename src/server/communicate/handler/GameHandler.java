@@ -10,7 +10,7 @@ public class GameHandler {
 	}
 	
 	public void start() {
-		GameSetup game = new GameSetup("Airplane skyforce", 500, 600, room);
+		GameSetup game = new GameSetup(room);
 		game.start();
 	}
 }

@@ -1,8 +1,5 @@
 package server.game;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,14 +14,12 @@ public class GameManager {
 	private int health;
 	private int score = 0;
 	
-	private int room;
-	
-	public GameManager(int room) {
-		this.room = room;
+	public GameManager() {
+
 	}
 	
 	public void init() {
-		player = new Player((GameSetup.gameWidth/2) + 50, (GameSetup.gameHeight - 30) + 50, room);
+		player = new Player((GameSetup.gameWidth/2) + 50, (GameSetup.gameHeight - 30) + 50);
 		player.init();
 		bullet = new ArrayList();
 		
@@ -60,10 +55,11 @@ public class GameManager {
 			enemies.get(i).tick();
 		}
 	}
-	public void render(Graphics g ) {
-		player.render(g);
+	
+	public void broadcast(int room) {
+		player.broadcast(room);
 		for (int i = 0; i<bullet.size(); i++) {
-			bullet.get(i).render(g);
+			bullet.get(i).broadcast(room);
 		}
 		for (int i = 0 ; i < bullet.size(); i++) {
 			if (bullet.get(i).getY() <= 50) {
@@ -77,7 +73,7 @@ public class GameManager {
 			if (!(enemies.get(i).getX() <= 50  || enemies.get(i).getX() >= 450  - 30
 					|| enemies.get(i).getY() >=450 - 30)) {
 				if (enemies.get(i).getY() >= 50) {
-					enemies.get(i).render(g);	
+					enemies.get(i).broadcast(room);	
 				}
 			}
 			
@@ -113,9 +109,6 @@ public class GameManager {
 					score += 1;
 				}
 			}
-			g.setColor(Color.blue);
-			g.setFont(new Font("arial", Font.BOLD, 40));
-			g.drawString("Score: " + score, 70, 500);
 		}
 	}
 }

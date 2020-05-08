@@ -1,14 +1,8 @@
 package server.game;
 
-import java.awt.Color;
-
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import server.communicate.Server;
 
-public class Player implements KeyListener {
+public class Player {
 	private int x;
 	private int y;
 	private boolean left;
@@ -19,12 +13,9 @@ public class Player implements KeyListener {
 	private long delay;
 	private int health;
 	
-	private int room;
-	
-	public Player(int x, int y, int room) {
+	public Player(int x, int y) {
 		 this.x = x;
 		 this.y = y;
-		 this.room = room;
 	}
 	
 	public int getX() {
@@ -53,7 +44,6 @@ public class Player implements KeyListener {
 	}
 
 	public void init() {
-		Display.frame.addKeyListener(this);
 		current = System.nanoTime();
 		delay = 100;
 		health = 3;
@@ -76,47 +66,13 @@ public class Player implements KeyListener {
 				if (breaks > delay) {
 					GameManager.bullet.add(new Bullet(x+11, y+12));	
 					current = System.nanoTime();
-					Server.broadcastToRoom(room, "pew");
 				}
 				
 			}
 		}
 	}
-	public void render(Graphics g) {
-		if (!(health <=0)) {
-			g.setColor(Color.red);
-			g.drawImage(LoadImage.player, x, y, 25, 25, null);	
-		}
-	}
-	public void keyPressed(KeyEvent e) {
-		int source = e.getKeyCode();
-		if (source == KeyEvent.VK_LEFT) {
-			 left = true;
-		}
-		if (source == KeyEvent.VK_RIGHT) {
-			 right = true;
-		}
-		if (source == KeyEvent.VK_SPACE) {
-			 fire = true;
-		}
-	}
-	public void keyReleased(KeyEvent e) {
-		int source = e.getKeyCode();
-		if (source == KeyEvent.VK_LEFT) {
-			 left = false;
-		}
-		if (source == KeyEvent.VK_RIGHT) {
-			 right = false;
-		}
-		if (source == KeyEvent.VK_SPACE) {
-			 fire = false;
-		}
-	}
-
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void broadcast(int room) {
+		String message = "PLAYER__" + x + "__" + y + "__";
+		Server.broadcastToRoom(room, message);
 	}
 }

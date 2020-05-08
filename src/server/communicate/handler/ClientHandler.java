@@ -41,6 +41,9 @@ public class ClientHandler {
 	    	case "GET_ROOM":
 				sendMessage(Server.getRoomList());
 				break;
+	    	case "CURRENT_ROOM":
+				sendMessage("" + room);
+				break;
     		case "CREATE_ROOM":
     			room = Server.createRoom(client);
     			break;
@@ -60,6 +63,7 @@ public class ClientHandler {
     			break;
     		case "START_GAME":
     			if (room != 0) {
+    				Server.broadcastToRoom(room, "START_GAME__");
     				GameHandler game = new GameHandler(room);
     				game.start();
     			}

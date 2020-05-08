@@ -1,7 +1,6 @@
 package server.game;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import server.communicate.Server;
 
 public class Bullet {
 	private int x;
@@ -33,9 +32,10 @@ public class Bullet {
 	public void tick() {
 		y -= speed;
 	}
-	public void render(Graphics g) {
-		g.setColor(Color.red);
-		g.fillRect(x, y, 6, 10);
+	
+	public void broadcast(int room) {
+		String message = "BULLET__" + x + "__" + y + "__";
+		Server.broadcastToRoom(room, message);
 	}
 	
 	

@@ -1,4 +1,4 @@
-package server.game;
+package client.game;
 
 import java.awt.Canvas;
 import java.awt.Color;

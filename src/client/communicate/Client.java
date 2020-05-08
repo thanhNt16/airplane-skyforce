@@ -15,7 +15,7 @@ class Client {
         Thread t = new Thread(listener);
         t.start();
         String message = "";
-        while (!message.equals("stop")) {
+        while (!message.equals("END")) {
         	message = inFromUser.readLine();
         	handler.sendMessage(message);
         }
@@ -49,8 +49,12 @@ class Listener implements Runnable {
 				handler.handleMessage(message);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
+				System.out.println("IO error");
 				e.printStackTrace();
-			}	
+			} catch (Exception e) {
+//				e.printStackTrace();
+				System.out.println("err");
+			}
 		}
 	}
 }
