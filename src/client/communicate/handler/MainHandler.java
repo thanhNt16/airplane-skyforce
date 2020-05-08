@@ -7,35 +7,18 @@ import java.net.InetAddress;
 
 
 public class MainHandler {
-	private MessageSender sender;
-    
-    public MainHandler(DatagramSocket clientSocket, InetAddress address, int port) {
-        this.sender = new MessageSender(clientSocket, address, port);
-    }
-    
-    public void sendMessage(String message) {
-    	sender.send(message);
-    }
-    
-    public void handleMessage(String message) {
-    	System.out.println("Received from server: " + message);
-    }
-}
-
-
-class MessageSender {
 	private DatagramSocket clientSocket;
 	private InetAddress address;
     private int port;
     
-    MessageSender(DatagramSocket clientSocket, InetAddress address, int port) {
+    public MainHandler(DatagramSocket clientSocket, InetAddress address, int port) {
     	this.clientSocket = clientSocket;
         this.address = address;
         this.port = port;
     }
-	
-	public void send(String message) {
-        try {
+    
+    public void sendMessage(String message) {
+    	try {
         	byte[] sendData = new byte[1024];
     		sendData = message.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
@@ -44,5 +27,9 @@ class MessageSender {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+    }
+    
+    public void handleMessage(String message) {
+    	System.out.println("Received from server: " + message);
+    }
 }

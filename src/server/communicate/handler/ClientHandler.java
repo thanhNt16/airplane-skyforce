@@ -8,17 +8,29 @@ import java.net.InetAddress;
 import server.communicate.Server;
 
 public class ClientHandler {
-	private MessageSender sender;
+	private DatagramSocket serverSocket;
+	private InetAddress address;
+    private int port;
 	private String client;
 	private int room;
     
     public ClientHandler(DatagramSocket serverSocket, String client, InetAddress address, int port) {
-        this.sender = new MessageSender(serverSocket, address, port);
         this.client = client;
+        this.serverSocket = serverSocket;
+        this.address = address;
+        this.port = port;
     }
     
     public void sendMessage(String message) {
-    	sender.send(message);
+    	try {
+        	byte[] sendData = new byte[1024];
+    		sendData = message.getBytes();
+            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
+			serverSocket.send(sendPacket);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public void handleMessage(String message) {
@@ -46,31 +58,12 @@ public class ClientHandler {
     		case "BROADCAST":
     			Server.broadcastToRoom(room, payload[1]);
     			break;
+    		case "START_GAME":
+    			if (room != 0) {
+    				GameHandler game = new GameHandler(room);
+    				game.start();
+    			}
+    			break;
     	}
     }
-}
-
-
-class MessageSender {
-	private DatagramSocket serverSocket;
-	private InetAddress address;
-    private int port;
-    
-    MessageSender(DatagramSocket serverSocket, InetAddress address, int port) {
-    	this.serverSocket = serverSocket;
-        this.address = address;
-        this.port = port;
-    }
-	
-	public void send(String message) {
-        try {
-        	byte[] sendData = new byte[1024];
-    		sendData = message.getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
-			serverSocket.send(sendPacket);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
