@@ -1,7 +1,10 @@
 package client.game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+
+import hust.ict.graphics.LoadImage;
 
 
 public class GameSetup implements Runnable  {
@@ -53,15 +56,69 @@ public class GameSetup implements Runnable  {
 	}
 	
 	public void renderBullet(int x, int y) {
-		renderer.renderBullet(g, x, y);
+		buffer = display.getCanvas().getBufferStrategy();
+		if (buffer == null) {
+			display.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		g = buffer.getDrawGraphics();
+//		g.clearRect(0, 0, width, height);
+		//draw
+		g.setColor(Color.red);
+		g.fillRect(x, y, 6, 10);
+		//end of draw
+		buffer.show();
+//		g.dispose();
 	}
 	
 	public void renderEnemy(int x, int y) {
-		renderer.renderEnemy(g, x, y);
+		buffer = display.getCanvas().getBufferStrategy();
+		if (buffer == null) {
+			display.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		g = buffer.getDrawGraphics();
+//		g.clearRect(0, 0, width, height);
+		//draw
+		g.setColor(Color.black);
+		g.drawImage(LoadImage.enemy, x, y, 25, 25, null);
+		//end of draw
+		buffer.show();
+//		g.dispose();
 	}
 	
 	public void renderPlayer(int x, int y) {
-		renderer.renderPlayer(g, x, y);
+		buffer = display.getCanvas().getBufferStrategy();
+		if (buffer == null) {
+			display.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		g = buffer.getDrawGraphics();
+//		g.clearRect(0, 0, width, height);
+		//draw
+		g.setColor(Color.red);
+		g.drawImage(LoadImage.player, x, y, 25, 25, null);
+		//end of draw
+		buffer.show();
+//		g.dispose();
+	}
+	
+	public void prepare() {
+		if (buffer == null) {
+			display.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		g = buffer.getDrawGraphics();
+		g.clearRect(0, 0, width, height);
+		//draw
+		g.drawImage(LoadImage.image, 50, 50, gameWidth, gameHeight, null);
+		buffer.show();
+		g.dispose();
+	}
+	
+	public void clear() {
+		buffer.show();
+		g.dispose();
 	}
 	
 	public void render() {
@@ -76,7 +133,7 @@ public class GameSetup implements Runnable  {
 		g.drawImage(LoadImage.image, 50, 50, gameWidth, gameHeight, null);
 		//end of draw
 		buffer.show();
-		g.dispose();
+//		g.dispose();
 	}
 	
 	@Override

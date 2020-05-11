@@ -52,8 +52,8 @@ class Listener implements Runnable {
 				System.out.println("IO error");
 				e.printStackTrace();
 			} catch (Exception e) {
-//				e.printStackTrace();
-				System.out.println("err");
+				e.printStackTrace();
+//				System.out.println("err");
 			}
 		}
 	}

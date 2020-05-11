@@ -19,7 +19,8 @@ public class MainHandler {
         this.address = address;
         this.port = port;
         game = new GameSetup("Airplane skyforce", 500, 600);
-		game.start();
+//		game.start();
+        game.init();
     }
     
     public void sendMessage(String message) {
@@ -43,7 +44,7 @@ public class MainHandler {
     	switch (command) {
 	    	case "START_GAME":
 //	    		game = new GameSetup("Airplane skyforce", 500, 600);
-//	    		game.init();
+	    		game.prepare();
 				break;
 	    	case "BULLET":
 	    		x = Integer.parseInt(payload[1]);
@@ -62,7 +63,7 @@ public class MainHandler {
 				break;
 	    	case "END_FRAME":
 //	    		game.clear();
-//	    		game.prepareToRender();
+	    		game.prepare();
 				break;
     		default:
     			System.out.println("Received from server: " + message);
