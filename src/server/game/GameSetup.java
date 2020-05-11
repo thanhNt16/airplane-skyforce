@@ -16,6 +16,18 @@ public class GameSetup implements Runnable {
 		this.room = room;
 	}
 	
+	public void setLeft(boolean left) {
+		manager.setLeft(left);
+	}
+
+	public void setRight(boolean right) {
+		manager.setRight(right);
+	}
+
+	public void setFire(boolean fire) {
+		manager.setFire(fire);
+	}
+	
 	public void init() {
 		manager = new GameManager();
 		manager.init();

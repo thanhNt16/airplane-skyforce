@@ -9,6 +9,17 @@ public class Player {
 	private boolean right;
 	private boolean fire;
 	
+	public void setLeft(boolean left) {
+		this.left = left;
+	}
+
+	public void setRight(boolean right) {
+		this.right = right;
+	}
+
+	public void setFire(boolean fire) {
+		this.fire = fire;
+	}
 	private long current;
 	private long delay;
 	private int health;

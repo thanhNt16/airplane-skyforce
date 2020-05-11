@@ -18,6 +18,18 @@ public class GameManager {
 
 	}
 	
+	public void setLeft(boolean left) {
+		player.setLeft(left);
+	}
+
+	public void setRight(boolean right) {
+		player.setRight(right);
+	}
+
+	public void setFire(boolean fire) {
+		player.setFire(fire);
+	}
+	
 	public void init() {
 		player = new Player((GameSetup.gameWidth/2) + 50, (GameSetup.gameHeight - 30) + 50);
 		player.init();

@@ -13,6 +13,7 @@ public class ClientHandler {
     private int port;
 	private String client;
 	private int room;
+	private GameHandler game;
     
     public ClientHandler(DatagramSocket serverSocket, String client, InetAddress address, int port) {
         this.client = client;
@@ -64,9 +65,13 @@ public class ClientHandler {
     		case "START_GAME":
     			if (room != 0) {
     				Server.broadcastToRoom(room, "START_GAME__");
-    				GameHandler game = new GameHandler(room);
+    				game = new GameHandler(room);
     				game.start();
     			}
+    			break;
+    		case "GAME":
+    			String action = payload[1];
+    			game.performAction(action);
     			break;
     	}
     }
