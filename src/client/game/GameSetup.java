@@ -2,9 +2,9 @@ package client.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 import client.communicate.handler.MainHandler;
 import hust.ict.graphics.LoadImage;
@@ -21,6 +21,8 @@ public class GameSetup {
 	public static final int gameWidth = 400;
 	public static final int gameHeight = 400;
 	
+	private List<String> queue = new ArrayList<String>();
+	
 	public GameSetup(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -30,87 +32,42 @@ public class GameSetup {
 	public void init(MainHandler handler) {
 		display = new Display(title, width, height);
 		LoadImage.init();
-		display.frame.addKeyListener(handler);
-	}
-	
-	public void renderBullet(int x, int y) {
-		buffer = display.getCanvas().getBufferStrategy();
+		Display.frame.addKeyListener(handler);
 		if (buffer == null) {
 			display.getCanvas().createBufferStrategy(3);
-			return;
+			buffer = display.getCanvas().getBufferStrategy();
 		}
-		g = buffer.getDrawGraphics();
-//		g.clearRect(0, 0, width, height);
-		//draw
-		g.setColor(Color.red);
-		g.fillRect(x, y, 6, 10);
-		//end of draw
-		buffer.show();
-//		g.dispose();
 	}
 	
-	public void renderEnemy(int x, int y) {
-		buffer = display.getCanvas().getBufferStrategy();
-		if (buffer == null) {
-			display.getCanvas().createBufferStrategy(3);
-			return;
-		}
-		g = buffer.getDrawGraphics();
-//		g.clearRect(0, 0, width, height);
-		//draw
-		g.setColor(Color.black);
-		g.drawImage(LoadImage.enemy, x, y, 25, 25, null);
-		//end of draw
-		buffer.show();
-//		g.dispose();
+	public void pushToQueue(String message) {
+		queue.add(message);
 	}
 	
-	public void renderPlayer(int x, int y) {
-		buffer = display.getCanvas().getBufferStrategy();
-		if (buffer == null) {
-			display.getCanvas().createBufferStrategy(3);
-			return;
-		}
-		g = buffer.getDrawGraphics();
-//		g.clearRect(0, 0, width, height);
-		//draw
-		g.setColor(Color.red);
-		g.drawImage(LoadImage.player, x, y, 25, 25, null);
-		//end of draw
-		buffer.show();
-//		g.dispose();
-	}
-	
-	public void prepare() {
-		if (buffer == null) {
-			display.getCanvas().createBufferStrategy(3);
-			return;
-		}
+	public void flushQueue() {
 		g = buffer.getDrawGraphics();
 		g.clearRect(0, 0, width, height);
-		//draw
-		g.drawImage(LoadImage.image, 50, 50, gameWidth, gameHeight, null);
-		buffer.show();
-		g.dispose();
-	}
-	
-	public void clear() {
-		buffer.show();
-		g.dispose();
-	}
-	
-	public void render() {
-		buffer = display.getCanvas().getBufferStrategy();
-		if (buffer == null) {
-			display.getCanvas().createBufferStrategy(3);
-			return;
+		g.drawImage(LoadImage.image, 50, 50, gameWidth, gameHeight, null);	
+		for (String message : queue) {
+			String[] payload = message.split("__");
+			int x = Integer.parseInt(payload[1]);
+    		int y = Integer.parseInt(payload[2]);
+			switch (payload[0]) {
+		    	case "BULLET":
+		    		g.setColor(Color.red);
+		    		g.fillRect(x, y, 6, 10);
+					break;
+		    	case "ENEMY":
+		    		g.setColor(Color.black);
+		    		g.drawImage(LoadImage.enemy, x, y, 25, 25, null);
+					break;
+		    	case "PLAYER":
+		    		g.setColor(Color.red);
+		    		g.drawImage(LoadImage.player, x, y, 25, 25, null);
+					break;
+			}
 		}
-		g = buffer.getDrawGraphics();
-		g.clearRect(0, 0, width, height);
-		//draw
-		g.drawImage(LoadImage.image, 50, 50, gameWidth, gameHeight, null);
-		//end of draw
 		buffer.show();
-//		g.dispose();
+		g.dispose();
+		queue.clear();
 	}
 }

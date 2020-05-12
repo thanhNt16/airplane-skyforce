@@ -20,8 +20,7 @@ public class MainHandler implements KeyListener {
     	this.clientSocket = clientSocket;
         this.address = address;
         this.port = port;
-        game = new GameSetup("Airplane skyforce", 500, 600);
-//		game.start();
+        game = new GameSetup("Skywar airforce", 500, 600);
         game.init(this);
     }
     
@@ -32,7 +31,6 @@ public class MainHandler implements KeyListener {
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
         	clientSocket.send(sendPacket);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -40,32 +38,18 @@ public class MainHandler implements KeyListener {
     public void handleMessage(String message) {
     	String[] payload = message.split("__");
     	String command = payload[0];
-    	int x;
-    	int y;
 
     	switch (command) {
 	    	case "START_GAME":
-//	    		game = new GameSetup("Airplane skyforce", 500, 600);
-	    		game.prepare();
+	    		game.flushQueue();
 				break;
 	    	case "BULLET":
-	    		x = Integer.parseInt(payload[1]);
-	    		y = Integer.parseInt(payload[2]);
-	    		game.renderBullet(x, y);
-				break;
 	    	case "ENEMY":
-	    		x = Integer.parseInt(payload[1]);
-	    		y = Integer.parseInt(payload[2]);
-	    		game.renderEnemy(x, y);
-				break;
 	    	case "PLAYER":
-	    		x = Integer.parseInt(payload[1]);
-	    		y = Integer.parseInt(payload[2]);
-	    		game.renderPlayer(x, y);
+	    		game.pushToQueue(message);
 				break;
 	    	case "END_FRAME":
-//	    		game.clear();
-	    		game.prepare();
+	    		game.flushQueue();
 				break;
     		default:
     			System.out.println("Received from server: " + message);

@@ -4,22 +4,18 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
-import javax.swing.SwingUtilities;
-
 import client.communicate.handler.MainHandler;
 
 public class Start extends JFrame {
+	private static final long serialVersionUID = 1L;
 	private static JTextField address;
 	private static JTextField username;
 	JLabel label;
@@ -70,31 +66,28 @@ public class Start extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-				String name = username.getText();
-				String IP = address.getText();
-				System.out.println(name + " " + IP);
-				
+					String name = username.getText();
+					String IP = address.getText();
+					System.out.println(name + " " + IP);
 					
-				BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-				DatagramSocket clientSocket;
-				
-					clientSocket = new DatagramSocket();
-				
-				InetAddress IPAddress = InetAddress.getByName("localhost");
-				MainHandler handler = new MainHandler(clientSocket, IPAddress, 9876);
-				Listener listener = new Listener(clientSocket, handler);
-				Thread t = new Thread(listener);
-				t.start();
-				String message = "";
-				while (!message.equals("END")) {
-					message = inFromUser.readLine();
-					handler.sendMessage(message);
-				}
-				listener.terminate();
-				clientSocket.close();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+						
+					BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+					DatagramSocket clientSocket = new DatagramSocket();
+					
+					InetAddress IPAddress = InetAddress.getByName("localhost");
+					MainHandler handler = new MainHandler(clientSocket, IPAddress, 9876);
+					Listener listener = new Listener(clientSocket, handler);
+					Thread t = new Thread(listener);
+					t.start();
+					String message = "";
+					while (!message.equals("END")) {
+						message = inFromUser.readLine();
+						handler.sendMessage(message);
+					}
+					listener.terminate();
+					clientSocket.close();
+				} catch (Exception err) {
+					err.printStackTrace();
 				}
 			}
 		});
