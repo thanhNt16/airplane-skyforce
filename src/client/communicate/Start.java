@@ -18,6 +18,7 @@ public class Start extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static JTextField address;
 	private static JTextField username;
+	private static Start instance;
 	JLabel label;
 
 	public Start() {
@@ -69,8 +70,9 @@ public class Start extends JFrame {
 					String name = username.getText();
 					String IP = address.getText();
 					System.out.println(name + " " + IP);
-					
+					instance.setVisible(false);
 						
+					
 					BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 					DatagramSocket clientSocket = new DatagramSocket();
 					
@@ -92,6 +94,12 @@ public class Start extends JFrame {
 			}
 		});
 
+	}
+	public static Start getInstance() {
+		if (instance == null) {
+			instance = new Start();
+		}
+		return instance;
 	}
 	
 }

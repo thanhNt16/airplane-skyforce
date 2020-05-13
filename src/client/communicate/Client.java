@@ -7,7 +7,7 @@ import client.communicate.handler.MainHandler;
 
 class Client {
 	public static void main(String args[]) throws Exception {
-//		Start frame = new Start();
+//		Start frame = Start.getInstance();
 //		frame.setVisible(true);
 
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
