@@ -1,6 +1,7 @@
 package client.game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class GameSetup {
 	public void init(MainHandler handler) {
 		display = new Display(title, width, height);
 		LoadImage.init();
+		
+		Display.frame.setFocusable(true);
 		Display.frame.addKeyListener(handler);
 		if (buffer == null) {
 			display.getCanvas().createBufferStrategy(3);
@@ -63,9 +66,28 @@ public class GameSetup {
 		    	case "PLAYER":
 		    		g.setColor(Color.red);
 		    		g.drawImage(LoadImage.player, x, y, 25, 25, null);
+		    		g.setColor(Color.blue);
+					g.setFont(new Font("arial", Font.BOLD, 8));
+					g.drawString("Player A", x, y);
 					break;
 			}
 		}
+		g.setColor(Color.blue);
+		g.setFont(new Font("arial", Font.BOLD, 12));
+		g.drawString("Player A: 0", 70, 500);
+		
+		g.setColor(Color.red);
+		g.setFont(new Font("arial", Font.BOLD, 12));
+		g.drawString("Player B: 0", 150, 500);
+		
+		g.setColor(Color.yellow);
+		g.setFont(new Font("arial", Font.BOLD, 12));
+		g.drawString("Player B: 0", 250, 500);
+
+		g.setColor(Color.green);
+		g.setFont(new Font("arial", Font.BOLD, 12));
+		g.drawString("Player B: 0", 380, 500);
+		
 		buffer.show();
 		g.dispose();
 		queue.clear();
