@@ -40,6 +40,7 @@ public class Player {
 	public Player(String address, String name) {
 		 this.name = name;
 		 this.address = address;
+		 this.health = 2;
 	}
 	
 	public int getX() {
@@ -96,12 +97,19 @@ public class Player {
 		}
 	}
 	public void broadcast(int room) {
-		String message = "PLAYER__" + x + "__" + y + "__" + address + "__" + name + "__";
-		Server.broadcastToRoom(room, message);
+		if (health > 0) {
+			String message = "PLAYER__" + x + "__" + y + "__" + address + "__" + name + "__";
+			Server.broadcastToRoom(room, message);
+		}
 	}
 	
 	public void broadcastScore(int room) {
 		String message = "SCORE__" + score + "__" + address + "__" + name + "__";
+		Server.broadcastToRoom(room, message);
+	}
+	
+	public void broadcastHealth(int room) {
+		String message = "HEALTH__" + health + "__" + address + "__" + name + "__";
 		Server.broadcastToRoom(room, message);
 	}
 

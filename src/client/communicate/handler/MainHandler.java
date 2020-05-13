@@ -47,6 +47,7 @@ public class MainHandler implements KeyListener {
 	    	case "ENEMY":
 	    	case "PLAYER":
 	    	case "SCORE":
+	    	case "HEALTH":
 	    		game.pushToQueue(message);
 				break;
 	    	case "END_FRAME":

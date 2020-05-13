@@ -40,9 +40,11 @@ public class ClientHandler {
         	String name;
 
         	switch (command) {
+        		// GET_ROOM__
     	    	case "GET_ROOM":
     				sendMessage(Server.getRoomList());
     				break;
+				// CURRENT_ROOM__
     	    	case "CURRENT_ROOM":
     				sendMessage("" + roomId);
     				break;
@@ -51,26 +53,31 @@ public class ClientHandler {
         			roomId = Server.createRoom(client, name);
         			isAdmin = true;
         			break;
+    			// JOIN_ROOM__1__duc__
         		case "JOIN_ROOM":
         			int id = Integer.parseInt(payload[1]);
         			name = payload[2];
         			roomId = Server.joinRoom(client, name, id);
         			break;
+        		// LEAVE_ROOM__
         		case "LEAVE_ROOM":
         			if (roomId != 0) {
         				Server.leaveRoom(client, roomId);
         				roomId = 0;
         			}
         			break;
+    			// BROADCAST__abc__
         		case "BROADCAST":
         			Server.broadcastToRoom(roomId, payload[1]);
         			break;
+        		// START_GAME__
         		case "START_GAME":
         			if (roomId != 0 && isAdmin) {
         				Server.broadcastToRoom(roomId, "START_GAME__");
         				Server.getRoom(roomId).start();
         			}
         			break;
+        		// GAME__*
         		case "GAME":
         			String action = payload[1];
         			Server.getRoom(roomId).performAction(client, action);

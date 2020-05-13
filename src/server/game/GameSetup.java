@@ -66,7 +66,7 @@ public class GameSetup implements Runnable {
 			
 			if (delta >= 1) {
 				tick();
-				manager.broadcast(roomId);
+				manager.broadcast();
 				Server.broadcastToRoom(roomId, "END_FRAME__");
 				delta--;
 			}

@@ -55,6 +55,7 @@ public class GameSetup {
 			String[] payload = message.split("__");
 			int x;
 			int y;
+			boolean added;
 			switch (payload[0]) {
 				// BULLET__10__20__	
 		    	case "BULLET":
@@ -82,7 +83,7 @@ public class GameSetup {
 					break;
 				// SCORE__10__localhost:8000__duc__
 		    	case "SCORE":
-		    		boolean added = false;
+		    		added = false;
 		    		int score = Integer.parseInt(payload[1]);
 		    		for (PlayerInfo p : players) {
 		    			if (p.getAddress().equals(payload[2])) {
@@ -97,13 +98,31 @@ public class GameSetup {
 		    			players.add(p);
 		    		}
 		    		break;
+	    		// HEALTH__10__localhost:8000__
+		    	case "HEALTH":
+		    		added = false;
+		    		int health = Integer.parseInt(payload[1]);
+		    		for (PlayerInfo p : players) {
+		    			if (p.getAddress().equals(payload[2])) {
+		    				p.setHealth(health);
+		    				added = true;
+		    				break;
+		    			}
+		    		}
+		    		if (!added) {
+		    			PlayerInfo p = new PlayerInfo(payload[2], payload[3]);
+		    			p.setHealth(health);
+		    			players.add(p);
+		    		}
+		    		System.out.println(health);
+		    		break;
 			}
 		}
 		int startY = 470;
 		for (PlayerInfo p : players) {
 			g.setColor(Color.blue);
     		g.setFont(new Font("arial", Font.BOLD, 12));
-    		g.drawString(p.getName() + ": " + p.getScore(), 70, startY);
+    		g.drawString(p.getName() + "- score: " + p.getScore() + ", health: " + p.getHealth(), 70, startY);
     		startY += 20;
 		}
 		buffer.show();
@@ -116,11 +135,13 @@ class PlayerInfo {
 	private String address;
 	private String name;
 	private int score;
+	private int health;
 	
 	public PlayerInfo(String address, String name) {
 		this.address = address;
 		this.name = name;
 		this.score = 0;
+		this.health = 3;
 	}
 	
 	public String getAddress() {
@@ -137,5 +158,13 @@ class PlayerInfo {
 
 	public String getName() {
 		return name;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
 	}
 }

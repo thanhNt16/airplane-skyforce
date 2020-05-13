@@ -59,13 +59,13 @@ public class GameManager {
 		}
 	}
 	
-	public void broadcast(int room) {
+	public void broadcast() {
 		for (Player player : Server.getRoom(roomId).getPlayers()) {
-			player.broadcast(room);
+			player.broadcast(roomId);
 		}
 		
 		for (int i = 0; i<bullets.size(); i++) {
-			bullets.get(i).broadcast(room);
+			bullets.get(i).broadcast(roomId);
 		}
 		for (int i = 0 ; i < bullets.size(); i++) {
 			if (bullets.get(i).getY() <= 50) {
@@ -79,7 +79,7 @@ public class GameManager {
 			if (!(enemies.get(i).getX() <= 50  || enemies.get(i).getX() >= 450 - 30
 					|| enemies.get(i).getY() >=450 - 30)) {
 				if (enemies.get(i).getY() >= 50) {
-					enemies.get(i).broadcast(room);	
+					enemies.get(i).broadcast(roomId);	
 				}
 			}
 			
@@ -90,14 +90,16 @@ public class GameManager {
 			
 			// Check player hit
 			for (Player player : Server.getRoom(roomId).getPlayers()) {
-				int px = player.getX();
-				int py = player.getY();
-				if (px <= ex + 25 && px + 25 >= ex && 
-						py <= ey + 25 && py + 25 >= ey) {
-					enemies.remove(i);
-					i--;
-					player.setHealth(player.getHealth() - 1);
-					System.out.println("hit " + player.getName());
+				if (player.getHealth() > 0) {
+					int px = player.getX();
+					int py = player.getY();
+					if (px <= ex + 25 && px + 25 >= ex && 
+							py <= ey + 25 && py + 25 >= ey) {
+						enemies.remove(i);
+						i--;
+						player.setHealth(player.getHealth() - 1);
+						player.broadcastHealth(roomId);
+					}
 				}
 			}
 			
@@ -116,7 +118,7 @@ public class GameManager {
 					for (Player p : Server.getRoom(roomId).getPlayers()) {	
 						if (p.getAddress().equals(b.getPlayer())) {
 							p.setScore(p.getScore() + 1);
-							p.broadcastScore(room);
+							p.broadcastScore(roomId);
 						}
 					}
 				}
