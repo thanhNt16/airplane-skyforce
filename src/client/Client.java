@@ -10,20 +10,22 @@ class Client {
 //		Start frame = Start.getInstance();
 //		frame.setVisible(true);
 
-		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-		DatagramSocket clientSocket = new DatagramSocket();
-		InetAddress IPAddress = InetAddress.getByName("localhost");
-		MainHandler handler = new MainHandler(clientSocket, IPAddress, 9876);
-		Listener listener = new Listener(clientSocket, handler);
-		Thread t = new Thread(listener);
-		t.start();
-		String message = "";
-		while (!message.equals("END")) {
-			message = inFromUser.readLine();
-			handler.sendMessage(message);
-		}
-		listener.terminate();
-		clientSocket.close();
+        ScreenManager.getInstance().display();
+
+//		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+//		DatagramSocket clientSocket = new DatagramSocket();
+//		InetAddress IPAddress = InetAddress.getByName("localhost");
+//		MainHandler handler = new MainHandler(clientSocket, IPAddress, 9876);
+//		Listener listener = new Listener(clientSocket, handler);
+//		Thread t = new Thread(listener);
+//		t.start();
+//		String message = "";
+//		while (!message.equals("END")) {
+//			message = inFromUser.readLine();
+//			handler.sendMessage(message);
+//		}
+//		listener.terminate();
+//		clientSocket.close();
 	}
 }
 
