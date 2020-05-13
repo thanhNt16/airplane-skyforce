@@ -53,11 +53,13 @@ public class Server {
     	return roomId++;
     }
     
-    public static void joinRoom(String address, String name, int room) {
+    public static int joinRoom(String address, String name, int room) {
     	if (rooms.containsKey(room)) {
     		Player player = new Player(address, name);
     		rooms.get(room).addPlayer(player);
+    		return room;
     	}
+    	return 0;
     }
     
     public static void leaveRoom(String address, int room) {

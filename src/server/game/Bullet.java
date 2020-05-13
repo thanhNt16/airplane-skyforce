@@ -6,10 +6,12 @@ public class Bullet {
 	private int x;
 	private int y;
 	private int speed;
+	private String player;
 	
-	public Bullet(int x, int y) {
+	public Bullet(int x, int y, String player) {
 		this.x = x;
 		this.y = y;
+		this.player = player;
 		speed = 10;
 	}
 	
@@ -37,7 +39,9 @@ public class Bullet {
 		String message = "BULLET__" + x + "__" + y + "__";
 		Server.broadcastToRoom(room, message);
 	}
-	
-	
+
+	public String getPlayer() {
+		return player;
+	}	
 }
 

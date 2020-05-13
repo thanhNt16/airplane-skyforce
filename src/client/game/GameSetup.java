@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.communicate.handler.MainHandler;
-import hust.ict.graphics.LoadImage;
 
 
 public class GameSetup {
@@ -18,11 +17,13 @@ public class GameSetup {
 	private BufferStrategy buffer;
 	private Graphics g;
 	
+	
 	private Display display;
 	public static final int gameWidth = 400;
 	public static final int gameHeight = 400;
 	
 	private List<String> queue = new ArrayList<String>();
+	private List<PlayerInfo> players = new ArrayList<PlayerInfo>();
 	
 	public GameSetup(String title, int width, int height) {
 		this.title = title;
@@ -52,44 +53,89 @@ public class GameSetup {
 		g.drawImage(LoadImage.image, 50, 50, gameWidth, gameHeight, null);	
 		for (String message : queue) {
 			String[] payload = message.split("__");
-			int x = Integer.parseInt(payload[1]);
-    		int y = Integer.parseInt(payload[2]);
+			int x;
+			int y;
 			switch (payload[0]) {
+				// BULLET__10__20__	
 		    	case "BULLET":
+		    		x = Integer.parseInt(payload[1]);
+		    		y = Integer.parseInt(payload[2]);
 		    		g.setColor(Color.red);
 		    		g.fillRect(x, y, 6, 10);
 					break;
+				// ENEMY__10__20__
 		    	case "ENEMY":
+		    		x = Integer.parseInt(payload[1]);
+		    		y = Integer.parseInt(payload[2]);
 		    		g.setColor(Color.black);
 		    		g.drawImage(LoadImage.enemy, x, y, 25, 25, null);
 					break;
+				// PLAYER__10__20__localhost:8000__duc__
 		    	case "PLAYER":
+		    		x = Integer.parseInt(payload[1]);
+		    		y = Integer.parseInt(payload[2]);
 		    		g.setColor(Color.red);
 		    		g.drawImage(LoadImage.player, x, y, 25, 25, null);
 		    		g.setColor(Color.blue);
 					g.setFont(new Font("arial", Font.BOLD, 8));
-					g.drawString("Player A", x, y);
+					g.drawString(payload[4], x, y);
 					break;
+				// SCORE__10__localhost:8000__duc__
+		    	case "SCORE":
+		    		boolean added = false;
+		    		int score = Integer.parseInt(payload[1]);
+		    		for (PlayerInfo p : players) {
+		    			if (p.getAddress().equals(payload[2])) {
+		    				p.setScore(score);
+		    				added = true;
+		    				break;
+		    			}
+		    		}
+		    		if (!added) {
+		    			PlayerInfo p = new PlayerInfo(payload[2], payload[3]);
+		    			p.setScore(score);
+		    			players.add(p);
+		    		}
+		    		break;
 			}
 		}
-		g.setColor(Color.blue);
-		g.setFont(new Font("arial", Font.BOLD, 12));
-		g.drawString("Player A: 0", 70, 500);
-		
-		g.setColor(Color.red);
-		g.setFont(new Font("arial", Font.BOLD, 12));
-		g.drawString("Player B: 0", 150, 500);
-		
-		g.setColor(Color.yellow);
-		g.setFont(new Font("arial", Font.BOLD, 12));
-		g.drawString("Player B: 0", 250, 500);
-
-		g.setColor(Color.green);
-		g.setFont(new Font("arial", Font.BOLD, 12));
-		g.drawString("Player B: 0", 380, 500);
-		
+		int startY = 470;
+		for (PlayerInfo p : players) {
+			g.setColor(Color.blue);
+    		g.setFont(new Font("arial", Font.BOLD, 12));
+    		g.drawString(p.getName() + ": " + p.getScore(), 70, startY);
+    		startY += 20;
+		}
 		buffer.show();
 		g.dispose();
 		queue.clear();
+	}
+}
+
+class PlayerInfo {
+	private String address;
+	private String name;
+	private int score;
+	
+	public PlayerInfo(String address, String name) {
+		this.address = address;
+		this.name = name;
+		this.score = 0;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

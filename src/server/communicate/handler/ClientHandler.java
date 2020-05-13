@@ -53,9 +53,8 @@ public class ClientHandler {
         			break;
         		case "JOIN_ROOM":
         			int id = Integer.parseInt(payload[1]);
-        			roomId = id;
-        			name = payload[1];
-        			Server.joinRoom(client, name, roomId);
+        			name = payload[2];
+        			roomId = Server.joinRoom(client, name, id);
         			break;
         		case "LEAVE_ROOM":
         			if (roomId != 0) {

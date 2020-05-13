@@ -3,8 +3,6 @@ package client.game;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import hust.ict.graphics.LoadImage;
-
 
 public class Renderer {
 	public Renderer() {

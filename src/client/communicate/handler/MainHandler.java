@@ -38,7 +38,7 @@ public class MainHandler implements KeyListener {
     public void handleMessage(String message) {
     	String[] payload = message.split("__");
     	String command = payload[0];
-    	System.out.println(message);
+    	
     	switch (command) {
 	    	case "START_GAME":
 	    		game.flushQueue();
@@ -46,6 +46,7 @@ public class MainHandler implements KeyListener {
 	    	case "BULLET":
 	    	case "ENEMY":
 	    	case "PLAYER":
+	    	case "SCORE":
 	    		game.pushToQueue(message);
 				break;
 	    	case "END_FRAME":
@@ -64,7 +65,6 @@ public class MainHandler implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int source = e.getKeyCode();
-		System.out.println("key");
 		if (source == KeyEvent.VK_LEFT) {
 			sendMessage("GAME__LEFT__");
 		}

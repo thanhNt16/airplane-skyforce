@@ -7,7 +7,7 @@ import server.communicate.Server;
 
 
 public class GameManager {
-	public static ArrayList<Bullet> bullet;
+	public static ArrayList<Bullet> bullets;
 	private ArrayList<Enemy> enemies;
 	
 	private long delay;
@@ -26,9 +26,8 @@ public class GameManager {
 			player.init();
 		}
 		
-		bullet = new ArrayList();
-		
-		enemies = new ArrayList();
+		bullets = new ArrayList<Bullet>();
+		enemies = new ArrayList<Enemy>();
 		current = System.nanoTime();
 		delay = 800;
 	}
@@ -38,7 +37,7 @@ public class GameManager {
 			player.tick();
 		}
 		
-		for (Bullet bu : bullet) {
+		for (Bullet bu : bullets) {
             bu.tick();
         }
 
@@ -65,19 +64,19 @@ public class GameManager {
 			player.broadcast(room);
 		}
 		
-		for (int i = 0; i<bullet.size(); i++) {
-			bullet.get(i).broadcast(room);
+		for (int i = 0; i<bullets.size(); i++) {
+			bullets.get(i).broadcast(room);
 		}
-		for (int i = 0 ; i < bullet.size(); i++) {
-			if (bullet.get(i).getY() <= 50) {
-				bullet.remove(i);
+		for (int i = 0 ; i < bullets.size(); i++) {
+			if (bullets.get(i).getY() <= 50) {
+				bullets.remove(i);
 				i--;
 			}
 		}
 		
 		// enemies
 		for (int i = 0; i < enemies.size(); i++) {
-			if (!(enemies.get(i).getX() <= 50  || enemies.get(i).getX() >= 450  - 30
+			if (!(enemies.get(i).getX() <= 50  || enemies.get(i).getX() >= 450 - 30
 					|| enemies.get(i).getY() >=450 - 30)) {
 				if (enemies.get(i).getY() >= 50) {
 					enemies.get(i).broadcast(room);	
@@ -85,10 +84,11 @@ public class GameManager {
 			}
 			
 		}
-		for (int i = 0; i<enemies.size(); i++) {
+		for (int i = 0; i < enemies.size(); i++) {
 			int ex = enemies.get(i).getX();
 			int ey = enemies.get(i).getY();
 			
+			// Check player hit
 			for (Player player : Server.getRoom(roomId).getPlayers()) {
 				int px = player.getX();
 				int py = player.getY();
@@ -99,17 +99,25 @@ public class GameManager {
 					player.setHealth(player.getHealth() - 1);
 					System.out.println("hit " + player.getName());
 				}
-				
-				for (int j = 0; j<bullet.size(); j++) {
-					int by = bullet.get(j).getY();
-					int bx = bullet.get(j).getX();
-					// collision
-					if (ex < bx + 6 && ex + 25 > bx && ey < by + 6  && ey + 25 > by) {
-						enemies.remove(i);
-						i--;
-						
-						bullet.remove(j);
-						j--;
+			}
+			
+			// Check bullet hit
+			for (int j = 0; j < bullets.size(); j++) {
+				Bullet b = bullets.get(j);
+				int by = b.getY();
+				int bx = b.getX();
+				// collision
+				if (ex < bx + 6 && ex + 25 > bx && ey < by + 6  && ey + 25 > by) {
+					enemies.remove(i);
+					i--;
+					
+					bullets.remove(j);
+					j--;
+					for (Player p : Server.getRoom(roomId).getPlayers()) {	
+						if (p.getAddress().equals(b.getPlayer())) {
+							p.setScore(p.getScore() + 1);
+							p.broadcastScore(room);
+						}
 					}
 				}
 			}

@@ -88,7 +88,7 @@ public class Player {
 			if (fire) {
 				long breaks = (System.nanoTime() - current) / 1000000;
 				if (breaks > delay) {
-					GameManager.bullet.add(new Bullet(x + 11, y + 12));	
+					GameManager.bullets.add(new Bullet(x + 11, y + 12, address));	
 					current = System.nanoTime();
 				}
 				
@@ -97,6 +97,11 @@ public class Player {
 	}
 	public void broadcast(int room) {
 		String message = "PLAYER__" + x + "__" + y + "__" + address + "__" + name + "__";
+		Server.broadcastToRoom(room, message);
+	}
+	
+	public void broadcastScore(int room) {
+		String message = "SCORE__" + score + "__" + address + "__" + name + "__";
 		Server.broadcastToRoom(room, message);
 	}
 
