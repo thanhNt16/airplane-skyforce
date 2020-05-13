@@ -3,11 +3,11 @@ package server.game;
 import java.util.ArrayList;
 import java.util.Random;
 
-import server.communicate.Server;
+import server.Server;
 
 
 public class GameManager {
-	public static ArrayList<Bullet> bullets;
+	private ArrayList<Bullet> bullets;
 	private ArrayList<Enemy> enemies;
 	
 	private long delay;
@@ -19,11 +19,15 @@ public class GameManager {
 		this.roomId = roomId;
 	}
 	
+	public void addBullet(Bullet bullet) {
+		bullets.add(bullet);
+	}
+	
 	public void init() {
 		for (Player player : Server.getRoom(roomId).getPlayers()) {
 			player.setX((GameSetup.gameWidth/2) + 50);
 			player.setY((GameSetup.gameHeight - 30) + 50);
-			player.init();
+			player.init(this);
 		}
 		
 		bullets = new ArrayList<Bullet>();
@@ -41,9 +45,8 @@ public class GameManager {
             bu.tick();
         }
 
-		long breaks = (System.nanoTime() - current) /1000000;
+		long breaks = (System.nanoTime() - current) / 1000000;
 		if (breaks > delay) {
-
 			for (int i = 0 ; i < 2; i++) {
 				Random rand = new Random();
 				int randX = rand.nextInt(450);

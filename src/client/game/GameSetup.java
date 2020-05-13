@@ -5,9 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import client.communicate.handler.MainHandler;
+import client.handler.MainHandler;
 
 
 public class GameSetup {
@@ -119,6 +120,8 @@ public class GameSetup {
 			}
 		}
 		int startY = 470;
+		Collections.sort(players);
+		Collections.reverse(players);
 		for (PlayerInfo p : players) {
 			g.setColor(Color.blue);
     		g.setFont(new Font("arial", Font.BOLD, 12));
@@ -131,7 +134,7 @@ public class GameSetup {
 	}
 }
 
-class PlayerInfo {
+class PlayerInfo implements Comparable<PlayerInfo> {
 	private String address;
 	private String name;
 	private int score;
@@ -166,5 +169,10 @@ class PlayerInfo {
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	@Override
+	public int compareTo(PlayerInfo info) {
+		return this.score - info.getScore();
 	}
 }

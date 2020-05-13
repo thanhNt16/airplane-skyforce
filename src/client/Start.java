@@ -1,4 +1,4 @@
-package client.communicate;
+package client;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
-import client.communicate.handler.MainHandler;
+import client.handler.MainHandler;
 
 public class Start extends JFrame {
 	private static final long serialVersionUID = 1L;

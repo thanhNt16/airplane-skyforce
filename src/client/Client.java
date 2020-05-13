@@ -1,9 +1,9 @@
-package client.communicate;
+package client;
 
 import java.io.*;
 import java.net.*;
 
-import client.communicate.handler.MainHandler;
+import client.handler.MainHandler;
 
 class Client {
 	public static void main(String args[]) throws Exception {

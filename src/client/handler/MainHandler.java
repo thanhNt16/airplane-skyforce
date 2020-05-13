@@ -1,4 +1,4 @@
-package client.communicate.handler;
+package client.handler;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

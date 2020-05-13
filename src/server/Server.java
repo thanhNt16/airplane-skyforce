@@ -1,10 +1,10 @@
-package server.communicate;
+package server;
 
 import java.net.*;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import server.communicate.handler.ClientHandler;
+import server.handler.ClientHandler;
 import server.game.Player;
 
 

@@ -1,11 +1,11 @@
-package server.communicate.handler;
+package server.handler;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import server.communicate.Server;
+import server.Server;
 
 public class ClientHandler {
 	private DatagramSocket serverSocket;

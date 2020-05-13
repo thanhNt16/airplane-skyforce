@@ -1,6 +1,6 @@
 package server.game;
 
-import server.communicate.Server;
+import server.Server;
 
 public class Bullet {
 	private int x;

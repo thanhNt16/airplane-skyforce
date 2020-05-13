@@ -1,6 +1,6 @@
 package server.game;
 
-import server.communicate.Server;
+import server.Server;
 
 public class Player {
 	private int x;
@@ -17,6 +17,12 @@ public class Player {
 	private String name;
 	private String address;
 	
+	private GameManager game;
+	
+	public void setGame(GameManager game) {
+		this.game = game;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -68,10 +74,11 @@ public class Player {
 		this.health = health;
 	}
 
-	public void init() {
+	public void init(GameManager game) {
 		current = System.nanoTime();
 		delay = 100;
 		health = 3;
+		this.game = game;
 	}
 	public void tick() {
 		if (!(health <= 0)) {
@@ -89,7 +96,7 @@ public class Player {
 			if (fire) {
 				long breaks = (System.nanoTime() - current) / 1000000;
 				if (breaks > delay) {
-					GameManager.bullets.add(new Bullet(x + 11, y + 12, address));	
+					game.addBullet(new Bullet(x + 11, y + 12, address));	
 					current = System.nanoTime();
 				}
 				
