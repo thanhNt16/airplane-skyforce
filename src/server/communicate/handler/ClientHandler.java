@@ -12,8 +12,8 @@ public class ClientHandler {
 	private InetAddress address;
     private int port;
 	private String client;
-	private int room;
-	private GameHandler game;
+	private int roomId;
+	private boolean isAdmin = false;
     
     public ClientHandler(DatagramSocket serverSocket, String client, InetAddress address, int port) {
         this.client = client;
@@ -29,7 +29,6 @@ public class ClientHandler {
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
 			serverSocket.send(sendPacket);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -38,45 +37,48 @@ public class ClientHandler {
     	try {
     		String[] payload = message.split("__");
         	String command = payload[0];
-//        	System.out.println(message);
+        	String name;
 
         	switch (command) {
     	    	case "GET_ROOM":
     				sendMessage(Server.getRoomList());
     				break;
     	    	case "CURRENT_ROOM":
-    				sendMessage("" + room);
+    				sendMessage("" + roomId);
     				break;
         		case "CREATE_ROOM":
-        			room = Server.createRoom(client);
+        			name = payload[1];
+        			roomId = Server.createRoom(client, name);
+        			isAdmin = true;
         			break;
         		case "JOIN_ROOM":
-        			int roomId = Integer.parseInt(payload[1]);
-        			room = roomId;
-        			Server.joinRoom(client, roomId);
+        			int id = Integer.parseInt(payload[1]);
+        			roomId = id;
+        			name = payload[1];
+        			Server.joinRoom(client, name, roomId);
         			break;
         		case "LEAVE_ROOM":
-        			if (room != 0) {
-        				Server.leaveRoom(client, room);
-        				room = 0;
+        			if (roomId != 0) {
+        				Server.leaveRoom(client, roomId);
+        				roomId = 0;
         			}
         			break;
         		case "BROADCAST":
-        			Server.broadcastToRoom(room, payload[1]);
+        			Server.broadcastToRoom(roomId, payload[1]);
         			break;
         		case "START_GAME":
-        			if (room != 0) {
-        				Server.broadcastToRoom(room, "START_GAME__");
-        				game = new GameHandler(room);
-        				game.start();
+        			if (roomId != 0 && isAdmin) {
+        				Server.broadcastToRoom(roomId, "START_GAME__");
+        				Server.getRoom(roomId).start();
         			}
         			break;
         		case "GAME":
         			String action = payload[1];
-        			game.performAction(action);
+        			Server.getRoom(roomId).performAction(client, action);
         			break;
         	}
     	} catch (Exception e) {
+    		System.out.println(message);
     		e.printStackTrace();
     	}
     }

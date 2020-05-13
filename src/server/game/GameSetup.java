@@ -10,26 +10,14 @@ public class GameSetup implements Runnable {
 	public static final int gameWidth = 400;
 	public static final int gameHeight = 400;
 	
-	private int room;
+	private int roomId;
 	
-	public GameSetup(int room) {
-		this.room = room;
-	}
-	
-	public void setLeft(boolean left) {
-		manager.setLeft(left);
-	}
-
-	public void setRight(boolean right) {
-		manager.setRight(right);
-	}
-
-	public void setFire(boolean fire) {
-		manager.setFire(fire);
+	public GameSetup(int roomId) {
+		this.roomId = roomId;
 	}
 	
 	public void init() {
-		manager = new GameManager();
+		manager = new GameManager(roomId);
 		manager.init();
 	}
 	
@@ -77,10 +65,9 @@ public class GameSetup implements Runnable {
 			current = System.nanoTime();
 			
 			if (delta >= 1) {
-
 				tick();
-				manager.broadcast(room);
-				Server.broadcastToRoom(room, "END_FRAME__");
+				manager.broadcast(roomId);
+				Server.broadcastToRoom(roomId, "END_FRAME__");
 				delta--;
 			}
 		}

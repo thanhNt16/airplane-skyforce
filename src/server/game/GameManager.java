@@ -3,46 +3,41 @@ package server.game;
 import java.util.ArrayList;
 import java.util.Random;
 
+import server.communicate.Server;
+
 
 public class GameManager {
-	private Player player;
 	public static ArrayList<Bullet> bullet;
 	private ArrayList<Enemy> enemies;
 	
 	private long delay;
 	private long current;
-	private int health;
-	private int score = 0;
 	
-	public GameManager() {
-
-	}
+	private int roomId;
 	
-	public void setLeft(boolean left) {
-		player.setLeft(left);
-	}
-
-	public void setRight(boolean right) {
-		player.setRight(right);
-	}
-
-	public void setFire(boolean fire) {
-		player.setFire(fire);
+	public GameManager(int roomId) {
+		this.roomId = roomId;
 	}
 	
 	public void init() {
-		player = new Player((GameSetup.gameWidth/2) + 50, (GameSetup.gameHeight - 30) + 50);
-		player.init();
+		for (Player player : Server.getRoom(roomId).getPlayers()) {
+			player.setX((GameSetup.gameWidth/2) + 50);
+			player.setY((GameSetup.gameHeight - 30) + 50);
+			player.init();
+		}
+		
 		bullet = new ArrayList();
 		
 		enemies = new ArrayList();
 		current = System.nanoTime();
 		delay = 800;
-		health = player.getHealth();
 	}
 	
 	public void tick() {
-		player.tick();
+		for (Player player : Server.getRoom(roomId).getPlayers()) {
+			player.tick();
+		}
+		
 		for (Bullet bu : bullet) {
             bu.tick();
         }
@@ -54,10 +49,7 @@ public class GameManager {
 				Random rand = new Random();
 				int randX = rand.nextInt(450);
 				int randY = rand.nextInt(450);
-				if (health > 0) {
-					enemies.add(new Enemy(randX, -randY));	
-				}
-				
+				enemies.add(new Enemy(randX, -randY));
 			}
 			current = System.nanoTime();
 		}
@@ -69,7 +61,10 @@ public class GameManager {
 	}
 	
 	public void broadcast(int room) {
-		player.broadcast(room);
+		for (Player player : Server.getRoom(roomId).getPlayers()) {
+			player.broadcast(room);
+		}
+		
 		for (int i = 0; i<bullet.size(); i++) {
 			bullet.get(i).broadcast(room);
 		}
@@ -94,31 +89,28 @@ public class GameManager {
 			int ex = enemies.get(i).getX();
 			int ey = enemies.get(i).getY();
 			
-			int px = player.getX();
-			int py = player.getY();
-			if (px <= ex + 25 && px + 25 >= ex && 
-					py <= ey + 25 && py + 25 >= ey) {
-				enemies.remove(i);
-				i--;
-				health--;
-				System.out.println("health " + health);
-				if (health <= 0) {
-					enemies.removeAll(enemies);
-					player.setHealth(0);
-				}
-			}
-			
-			for (int j = 0; j<bullet.size(); j++) {
-				int by = bullet.get(j).getY();
-				int bx = bullet.get(j).getX();
-				// collision
-				if (ex < bx + 6 && ex + 25 > bx && ey < by + 6  && ey + 25 > by) {
+			for (Player player : Server.getRoom(roomId).getPlayers()) {
+				int px = player.getX();
+				int py = player.getY();
+				if (px <= ex + 25 && px + 25 >= ex && 
+						py <= ey + 25 && py + 25 >= ey) {
 					enemies.remove(i);
 					i--;
-					
-					bullet.remove(j);
-					j--;
-					score += 1;
+					player.setHealth(player.getHealth() - 1);
+					System.out.println("hit " + player.getName());
+				}
+				
+				for (int j = 0; j<bullet.size(); j++) {
+					int by = bullet.get(j).getY();
+					int bx = bullet.get(j).getX();
+					// collision
+					if (ex < bx + 6 && ex + 25 > bx && ey < by + 6  && ey + 25 > by) {
+						enemies.remove(i);
+						i--;
+						
+						bullet.remove(j);
+						j--;
+					}
 				}
 			}
 		}
