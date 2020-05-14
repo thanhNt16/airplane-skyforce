@@ -7,11 +7,13 @@ import static common.Constants.*;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class HomeScreen extends JPanel implements ActionListener {
@@ -20,6 +22,7 @@ public class HomeScreen extends JPanel implements ActionListener {
     private JButton joinGameBtn;
     private JButton quitGameBtn;
     private JLabel titleLb;
+    private JTextField host, port;
 
     public HomeScreen(int width, int height) {
         setSize(width, height);
@@ -66,14 +69,34 @@ public class HomeScreen extends JPanel implements ActionListener {
         }
     }
 
-    private String enterPlayerName() {
-        String name = JOptionPane.showInputDialog(
-                this,
-                "Enter player name:",
-                "Player Name",
-                JOptionPane.QUESTION_MESSAGE
-        );
-        return name;
+    private ArrayList<String> enterPlayerName() {
+    	host = new JTextField();
+		port = new JTextField();
+		JTextField name = new JTextField();
+		
+		Object[] message = {
+				"host", host,
+				"port", port,
+				"name", name
+		};
+		int result = JOptionPane.showConfirmDialog(null, message, 
+	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+		if (result == JOptionPane.OK_OPTION) {
+			System.out.println(host.getText());
+			System.out.println(port.getText());
+		}
+		ArrayList<String> resultArr = new ArrayList<String>();
+		resultArr.add(name.getText());
+		resultArr.add(host.getText());
+		resultArr.add(port.getText());
+		return resultArr;
+//        String name = JOptionPane.showInputDialog(
+//                this,
+//                message,
+//                "Player Name",
+//                JOptionPane.QUESTION_MESSAGE
+//        );
+//        return name;
     }
 
     private boolean validateName(String playerName) {
@@ -104,7 +127,7 @@ public class HomeScreen extends JPanel implements ActionListener {
     }
 
     private void createNewGame() {
-        String playerName = enterPlayerName();
+        String playerName = enterPlayerName().get(0);
         if (!validateName(playerName)) {
             return;
         }
@@ -114,7 +137,7 @@ public class HomeScreen extends JPanel implements ActionListener {
     }
 
     private void joinGame() {
-        String playerName = enterPlayerName();
+        String playerName = enterPlayerName().get(0);
         if (!validateName(playerName)) {
             return;
         }
