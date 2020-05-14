@@ -127,6 +127,7 @@ public class HomeScreen extends JPanel implements ActionListener {
     }
 
     private void createNewGame() {
+    	// get(0) là name get(1) host get(2) port
         String playerName = enterPlayerName().get(0);
         if (!validateName(playerName)) {
             return;
@@ -137,6 +138,8 @@ public class HomeScreen extends JPanel implements ActionListener {
     }
 
     private void joinGame() {
+    	// get(0) là name get(1) host get(2) port
+
         String playerName = enterPlayerName().get(0);
         if (!validateName(playerName)) {
             return;
