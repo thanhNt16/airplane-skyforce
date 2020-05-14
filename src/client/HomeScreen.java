@@ -15,9 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class HomeScreen extends JPanel implements ActionListener {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JButton createGameBtn;
     private JButton joinGameBtn;
@@ -88,18 +85,18 @@ public class HomeScreen extends JPanel implements ActionListener {
             return false;
         }
 
-        if (playerName.length() < 4) {
+        if (playerName.length() < 1) {
             JOptionPane.showMessageDialog(
                     this,
-                    "Your nickname is too short(must be longer than 4)!"
+                    "Your nickname is too short(must be longer than 1)!"
             );
             return false;
         }
 
-        if (playerName.length() > 16) {
+        if (playerName.length() > 10) {
             JOptionPane.showMessageDialog(
                     this,
-                    "Your nickname is too long(must be shorter than 16!"
+                    "Your nickname is too long(must be shorter than 10)!"
             );
             return false;
         }
@@ -112,9 +109,8 @@ public class HomeScreen extends JPanel implements ActionListener {
             return;
         }
 
-//        new Server(HOST_PORT).start();
+        Client.handler.sendMessage("CREATE_ROOM__" + playerName + "__");
         ScreenManager.getInstance().navigate(INGAME_SCREEN);
-//        new Client("localhost", HOST_PORT, playerName).connect();
     }
 
     private void joinGame() {
@@ -123,7 +119,10 @@ public class HomeScreen extends JPanel implements ActionListener {
             return;
         }
 
-//        ScreenManager.getInstance().navigate(WAITING_ROOM_SCREEN);
-//        new Client("localhost", HOST_PORT, playerName).connect();
+        // TODO: cho chon room
+        int room = 1;
+        
+        Client.handler.sendMessage("JOIN_ROOM__" + room + "__"  + playerName + "__");
+        ScreenManager.getInstance().navigate(INGAME_SCREEN);
     }
 }

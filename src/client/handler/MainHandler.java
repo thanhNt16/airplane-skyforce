@@ -7,21 +7,18 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import client.game.GameSetup;
+import client.IngameScreen;
 
 
 public class MainHandler implements KeyListener {
 	private DatagramSocket clientSocket;
 	private InetAddress address;
     private int port;
-    private GameSetup game;
     
     public MainHandler(DatagramSocket clientSocket, InetAddress address, int port) {
     	this.clientSocket = clientSocket;
         this.address = address;
         this.port = port;
-        game = new GameSetup("Skywar airforce", 500, 600);
-        game.init(this);
     }
     
     public void sendMessage(String message) {
@@ -41,17 +38,17 @@ public class MainHandler implements KeyListener {
     	
     	switch (command) {
 	    	case "START_GAME":
-	    		game.flushQueue();
+	    		IngameScreen.flushQueue();
 				break;
 	    	case "BULLET":
 	    	case "ENEMY":
 	    	case "PLAYER":
 	    	case "SCORE":
 	    	case "HEALTH":
-	    		game.pushToQueue(message);
+	    		IngameScreen.pushToQueue(message);
 				break;
 	    	case "END_FRAME":
-	    		game.flushQueue();
+	    		IngameScreen.flushQueue();
 				break;
     		default:
     			System.out.println("Received from server: " + message);

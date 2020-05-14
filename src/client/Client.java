@@ -6,26 +6,15 @@ import java.net.*;
 import client.handler.MainHandler;
 
 class Client {
-	public static void main(String args[]) throws Exception {
-//		Start frame = Start.getInstance();
-//		frame.setVisible(true);
-
-        ScreenManager.getInstance().display();
-
-//		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-//		DatagramSocket clientSocket = new DatagramSocket();
-//		InetAddress IPAddress = InetAddress.getByName("localhost");
-//		MainHandler handler = new MainHandler(clientSocket, IPAddress, 9876);
-//		Listener listener = new Listener(clientSocket, handler);
-//		Thread t = new Thread(listener);
-//		t.start();
-//		String message = "";
-//		while (!message.equals("END")) {
-//			message = inFromUser.readLine();
-//			handler.sendMessage(message);
-//		}
-//		listener.terminate();
-//		clientSocket.close();
+	public static MainHandler handler;
+	
+	public static void connect(String host, int port) throws Exception {
+		DatagramSocket clientSocket = new DatagramSocket();
+		InetAddress IPAddress = InetAddress.getByName(host);
+		handler = new MainHandler(clientSocket, IPAddress, port);
+		Listener listener = new Listener(clientSocket, handler);
+		Thread t = new Thread(listener);
+		t.start();
 	}
 }
 
@@ -53,12 +42,10 @@ class Listener implements Runnable {
 				String message = new String(receivePacket.getData());
 				handler.handleMessage(message);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				System.out.println("IO error");
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
-//				System.out.println("err");
 			}
 		}
 	}
