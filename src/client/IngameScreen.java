@@ -71,7 +71,8 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
 		g.setColor(Color.white);
 		g.setFont(new Font("arial", Font.BOLD, 8));
 		g.drawString("hello", 250, 250);
-        
+        buffer.show();
+        g.dispose();
 		System.out.println("press okok");
 	}
 	@Override
