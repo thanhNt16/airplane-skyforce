@@ -51,7 +51,7 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
         
         canvas = new Canvas();
 		canvas.setPreferredSize(new Dimension(500,600));
-		canvas.setBackground(new Color(212, 154, 140));
+//		canvas.setBackground(new Color(212, 154, 140));
 		canvas.setFocusable(false);
         add(canvas);
         LoadImage.init();
