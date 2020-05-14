@@ -15,12 +15,21 @@ public class Player {
 	private long delay;
 	
 	private String name;
+
 	private String address;
 	
 	private GameManager game;
 	
+	public GameManager getGame() {
+		return game;
+	}
+
 	public void setGame(GameManager game) {
 		this.game = game;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getName() {

@@ -38,6 +38,11 @@ public class GameManager {
 	
 	public void tick() {
 		for (Player player : Server.getRoom(roomId).getPlayers()) {
+			if (player.getGame() == null) {
+				player.setX((GameSetup.gameWidth/2) + 50);
+				player.setY((GameSetup.gameHeight - 30) + 50);
+				player.init(this);
+			}
 			player.tick();
 		}
 		

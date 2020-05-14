@@ -55,6 +55,12 @@ public class Server {
     
     public static int joinRoom(String address, String name, int room) {
     	if (rooms.containsKey(room)) {
+    		for (Player p : rooms.get(room).getPlayers()) {
+    			if (p.getAddress().equals(address)) {
+    				p.setName(name);
+    				return room;
+    			}
+    		}
     		Player player = new Player(address, name);
     		rooms.get(room).addPlayer(player);
     		return room;
