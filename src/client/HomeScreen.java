@@ -4,11 +4,13 @@ import static common.Constants.NORMAL_FONT;
 
 import static common.Constants.*;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,9 +22,10 @@ public class HomeScreen extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JButton createGameBtn;
     private JButton joinGameBtn;
-    private JButton quitGameBtn;
+    private JButton quitGameBtn, backBtn;
     private JLabel titleLb;
     private JTextField host, port;
+    private JPanel wrapper;
 
     public HomeScreen(int width, int height) {
         setSize(width, height);
@@ -32,41 +35,52 @@ public class HomeScreen extends JPanel implements ActionListener {
     }
 
     private void initUI() {
+    	wrapper = new JPanel();
+    	JLabel room = new JLabel("Room 1");
+    	wrapper.add(room);
+    	
         createGameBtn = new JButton("Create Game");
         joinGameBtn = new JButton("Join Game");
-        quitGameBtn = new JButton("Quit");
+        backBtn = new JButton("Back");
 
-        titleLb = new JLabel("Du_Th_Sky", SwingConstants.CENTER);
+        titleLb = new JLabel("Welcome " + AppState.getName(), SwingConstants.CENTER);
 
-        createGameBtn.setBounds(60, 320, 220, 50);
-        createGameBtn.setFont(new Font(NORMAL_FONT, Font.PLAIN, 24));
-        joinGameBtn.setBounds(60, 396, 220, 50);
-        joinGameBtn.setFont(new Font(NORMAL_FONT, Font.PLAIN, 24));
-        quitGameBtn.setBounds(60, 472, 220, 50);
-        quitGameBtn.setFont(new Font(NORMAL_FONT, Font.PLAIN, 24));
+        backBtn.setBounds(60, 20, 80, 40);
+        backBtn.setFont(new Font(NORMAL_FONT, Font.PLAIN, 12));
+        
+        wrapper.setBorder(BorderFactory.createLineBorder(Color.black));
+        wrapper.setBounds(250, 110, 400, 150);
+        
+        createGameBtn.setBounds(250, 320, 150, 50);
+        createGameBtn.setFont(new Font(NORMAL_FONT, Font.PLAIN, 14));
+        joinGameBtn.setBounds(440, 320, 150, 50);
+        joinGameBtn.setFont(new Font(NORMAL_FONT, Font.PLAIN, 14));
 
-        titleLb.setBounds(65, 160, 390, 70);
-        titleLb.setFont(new Font("Serif", Font.BOLD, 46));
+        titleLb.setBounds(250, 50, 390, 70);
+        titleLb.setFont(new Font("Serif", Font.BOLD, 32));
 
-        quitGameBtn.addActionListener(this);
         createGameBtn.addActionListener(this);
         joinGameBtn.addActionListener(this);
+        backBtn.addActionListener(this);
 
+        add(wrapper);
+        add(backBtn);
         add(createGameBtn);
         add(joinGameBtn);
-        add(quitGameBtn);
         add(titleLb);
+        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == quitGameBtn) {
-            System.exit(0);
-        } else if (e.getSource() == createGameBtn) {
+        if (e.getSource() == createGameBtn) {
             createNewGame();
         } else if (e.getSource() == joinGameBtn) {
             joinGame();
-        }
+        } else if (e.getSource() == backBtn) {
+        	ScreenManager.getInstance().navigate(PREPARE_SCREEN);
+        }  
+        
     }
 
     private ArrayList<String> enterPlayerName() {
@@ -128,27 +142,27 @@ public class HomeScreen extends JPanel implements ActionListener {
 
     private void createNewGame() {
     	// get(0) là name get(1) host get(2) port
-        String playerName = enterPlayerName().get(0);
-        if (!validateName(playerName)) {
-            return;
-        }
+//        String playerName = enterPlayerName().get(0);
+//        if (!validateName(playerName)) {
+//            return;
+//        }
 
-        Client.handler.sendMessage("CREATE_ROOM__" + playerName + "__");
+//        Client.handler.sendMessage("CREATE_ROOM__" + playerName + "__");
         ScreenManager.getInstance().navigate(INGAME_SCREEN);
     }
 
     private void joinGame() {
     	// get(0) là name get(1) host get(2) port
 
-        String playerName = enterPlayerName().get(0);
-        if (!validateName(playerName)) {
-            return;
-        }
+//        String playerName = enterPlayerName().get(0);
+//        if (!validateName(playerName)) {
+//            return;
+//        }
 
         // TODO: cho chon room
-        int room = 1;
-        
-        Client.handler.sendMessage("JOIN_ROOM__" + room + "__"  + playerName + "__");
+//        int room = 1;
+//        
+//        Client.handler.sendMessage("JOIN_ROOM__" + room + "__"  + playerName + "__");
         ScreenManager.getInstance().navigate(INGAME_SCREEN);
     }
 }
