@@ -10,6 +10,7 @@ public class Room {
 	private int id;
 	private GameSetup game;
 	private List<Player> players;
+	public boolean isRunning;
 	
 	public Room(int id) {
 		super();
@@ -23,7 +24,13 @@ public class Room {
 	}
 	
 	public void start() {
+		isRunning = true;
 		game.start();
+	}
+	
+	public void stop() {
+		isRunning = false;
+		game.stop();
 	}
 	
 	public void addPlayer(Player player) {

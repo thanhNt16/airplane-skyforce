@@ -1,5 +1,7 @@
 package client.handler;
 
+import static common.Constants.HOME_SCREEN;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 import client.IngameScreen;
+import client.ScreenManager;
 
 
 public class MainHandler implements KeyListener {
@@ -50,6 +53,9 @@ public class MainHandler implements KeyListener {
 	    	case "END_FRAME":
 	    		IngameScreen.flushQueue();
 				break;
+	    	case "END_GAME":
+	    		ScreenManager.getInstance().navigate(HOME_SCREEN);
+	    		break;
     		default:
     			System.out.println("Received from server: " + message);
     	}

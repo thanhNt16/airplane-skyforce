@@ -68,8 +68,18 @@ public class GameManager {
 	}
 	
 	public void broadcast() {
-		for (Player player : Server.getRoom(roomId).getPlayers()) {
-			player.broadcast(roomId);
+		boolean ended = true;
+		for (Player player : Server.getRoom(roomId).getPlayers()) {	
+			if (player.getHealth() > 0) {
+				player.broadcast(roomId);
+				ended = false;
+			}
+		}
+		
+		if (ended) {
+			Server.broadcastToRoom(roomId, "END_GAME__");
+			Server.getRoom(roomId).stop();
+			return;
 		}
 		
 		for (int i = 0; i<bullets.size(); i++) {
