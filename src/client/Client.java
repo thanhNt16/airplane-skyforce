@@ -9,19 +9,23 @@ import client.handler.MainHandler;
 
 class Client {
 	public static MainHandler handler;
+	public static final int PORT = 9876;
 	
 	public static void main(String args[]) throws Exception {
         ScreenManager.getInstance().display();
-        connect("localhost", 9876);
 	}
 	
-	public static void connect(String host, int port) throws Exception {
-		DatagramSocket clientSocket = new DatagramSocket();
-		InetAddress IPAddress = InetAddress.getByName(host);
-		handler = new MainHandler(clientSocket, IPAddress, port);
-		Listener listener = new Listener(clientSocket, handler);
-		Thread t = new Thread(listener);
-		t.start();
+	public static void connect(String host) {
+		try {
+			DatagramSocket clientSocket = new DatagramSocket();
+			InetAddress IPAddress = InetAddress.getByName(host);
+			handler = new MainHandler(clientSocket, IPAddress, PORT);
+			Listener listener = new Listener(clientSocket, handler);
+			Thread t = new Thread(listener);
+			t.start();
+		} catch (Exception err) {
+			err.printStackTrace();
+		}
 	}
 }
 

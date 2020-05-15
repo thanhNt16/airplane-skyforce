@@ -42,22 +42,24 @@ public class ClientHandler {
         	switch (command) {
         		// GET_ROOM__
     	    	case "GET_ROOM":
-    				sendMessage(Server.getRoomList());
+    				sendMessage("GET_ROOM_RESPONSE__" + Server.getRoomList() + "__");
     				break;
 				// CURRENT_ROOM__
     	    	case "CURRENT_ROOM":
-    				sendMessage("" + roomId);
+    				sendMessage("CURRENT_ROOM_RESPONSE__" + roomId + "__");
     				break;
         		case "CREATE_ROOM":
         			name = payload[1];
         			roomId = Server.createRoom(client, name);
         			isAdmin = true;
+        			sendMessage("CURRENT_ROOM_RESPONSE__" + roomId + "__");
         			break;
     			// JOIN_ROOM__1__duc__
         		case "JOIN_ROOM":
         			int id = Integer.parseInt(payload[1]);
         			name = payload[2];
         			roomId = Server.joinRoom(client, name, id);
+        			sendMessage("CURRENT_ROOM_RESPONSE__" + roomId + "__");
         			break;
         		// LEAVE_ROOM__
         		case "LEAVE_ROOM":

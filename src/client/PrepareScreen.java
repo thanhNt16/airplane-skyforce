@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class PrepareScreen extends JPanel implements ActionListener {
+	private static final long serialVersionUID = 1L;
 	private JButton createGameBtn;
     private JButton quitGameBtn;
     private JLabel titleLb, hostLabel, nameLabel;
@@ -75,8 +76,8 @@ public class PrepareScreen extends JPanel implements ActionListener {
         }
 	}
 	public void start() {
-		System.out.println(name.getText() + " " + host.getText());
 		AppState.setName(name.getText());
+		Client.connect(host.getText());
 		ScreenManager.getInstance().navigate(HOME_SCREEN);
 	}
 }

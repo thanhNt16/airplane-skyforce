@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
+import client.AppState;
 import client.IngameScreen;
 import client.ScreenManager;
 
@@ -55,6 +57,19 @@ public class MainHandler implements KeyListener {
 				break;
 	    	case "END_GAME":
 	    		ScreenManager.getInstance().navigate(HOME_SCREEN);
+	    		break;
+	    	case "GET_ROOM_RESPONSE":
+	    		ArrayList<Integer> roomList = new ArrayList<Integer>();
+	    		for (String room : payload[1].split(",")) {
+	    			if (room != null && !room.equals("")) {
+	    				roomList.add(Integer.parseInt(room));
+	    			}	
+	    		}
+	    		AppState.setRoomList(roomList);
+	    		break;
+	    	case "CURRENT_ROOM_RESPONSE":
+	    		int room = Integer.parseInt(payload[1]);
+	    		AppState.setRoom(room);
 	    		break;
     		default:
     			System.out.println("Received from server: " + message);

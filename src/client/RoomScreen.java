@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class RoomScreen extends JPanel implements ActionListener {
+	private static final long serialVersionUID = 1L;
 	private JButton startGameBtn, backBtn;
     private JPanel wrapper;
     private JLabel titleLb;
@@ -29,7 +30,7 @@ public class RoomScreen extends JPanel implements ActionListener {
 	
 	public void initUI() {
 		wrapper = new JPanel();
-    	JLabel room = new JLabel("Room 1");
+    	JLabel room = new JLabel("Room " + AppState.getRoom());
     	wrapper.add(room);
     	startGameBtn = new JButton("Start Game");
         backBtn = new JButton("Back");
