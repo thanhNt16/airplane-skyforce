@@ -148,7 +148,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 //        }
 
 //        Client.handler.sendMessage("CREATE_ROOM__" + playerName + "__");
-        ScreenManager.getInstance().navigate(INGAME_SCREEN);
+        ScreenManager.getInstance().navigate(ROOM_SCREEN);
     }
 
     private void joinGame() {
@@ -163,6 +163,6 @@ public class HomeScreen extends JPanel implements ActionListener {
 //        int room = 1;
 //        
 //        Client.handler.sendMessage("JOIN_ROOM__" + room + "__"  + playerName + "__");
-        ScreenManager.getInstance().navigate(INGAME_SCREEN);
+        ScreenManager.getInstance().navigate(ROOM_SCREEN);
     }
 }

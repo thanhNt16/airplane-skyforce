@@ -47,6 +47,9 @@ public class ScreenManager {
 		case HOME_SCREEN:
 			window.getContentPane().add(new HomeScreen(SCREEN_WIDTH, SCREEN_HEIGHT));
 			break;
+		case ROOM_SCREEN:
+			window.getContentPane().add(new RoomScreen(SCREEN_WIDTH, SCREEN_HEIGHT));
+			break;
 		case INGAME_SCREEN:
 			window.getContentPane().add(getIngameScreen());
 //          case WAITING_ROOM_SCREEN:

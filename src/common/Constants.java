@@ -20,6 +20,8 @@ public class Constants {
     public static final int IN_GAME_SCREEN_HEIGHT = 600;
     
     public static final String HOME_SCREEN = "HomeScreen";
+    public static final String ROOM_SCREEN = "RoomScreen";
+   
     public static final String PREPARE_SCREEN = "PrepareScreen";
     public static final String WAITING_ROOM_SCREEN = "WaitingRoomScreen";
     public static final String EXISTED_ROOM_SCREEN = "ExistedRoomScreen";
