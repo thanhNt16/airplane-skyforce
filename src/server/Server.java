@@ -41,6 +41,16 @@ public class Server {
     	return roomList;
     }
     
+    public static String getPlayers(int room) {
+    	String playerList = "";
+    	if (rooms.containsKey(room)) {
+    		for (Player p : rooms.get(room).getPlayers()) {
+    			playerList += p.getName() + ",";
+    		}
+    	}
+    	return playerList;
+    }
+    
     public static Room getRoom(int id) {
     	return rooms.get(id);
     }

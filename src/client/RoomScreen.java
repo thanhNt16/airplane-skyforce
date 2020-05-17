@@ -29,13 +29,22 @@ public class RoomScreen extends JPanel implements ActionListener {
 	}
 	
 	public void initUI() {
+		Client.handler.sendMessage("GET_PLAYERS__");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		wrapper = new JPanel();
-    	JLabel room = new JLabel("Room " + AppState.getRoom());
-    	wrapper.add(room);
+		for (String player : AppState.getPlayerList()) {
+			JLabel playerName = new JLabel(player);
+	    	wrapper.add(playerName);
+		}
+    	
     	startGameBtn = new JButton("Start Game");
         backBtn = new JButton("Back");
         
-        titleLb = new JLabel("Room  ", SwingConstants.CENTER);
+        titleLb = new JLabel("Room  " + AppState.getRoom(), SwingConstants.CENTER);
         backBtn.setBounds(60, 20, 80, 40);
         backBtn.setFont(new Font(NORMAL_FONT, Font.PLAIN, 12));
         

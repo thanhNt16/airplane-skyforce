@@ -67,6 +67,15 @@ public class MainHandler implements KeyListener {
 	    		}
 	    		AppState.setRoomList(roomList);
 	    		break;
+	    	case "GET_PLAYERS_RESPONSE":
+	    		ArrayList<String> playerList = new ArrayList<String>();
+	    		for (String player : payload[1].split(",")) {
+	    			if (player != null && !player.equals("")) {
+	    				playerList.add(player);
+	    			}	
+	    		}
+	    		AppState.setPlayerList(playerList);
+	    		break;
 	    	case "CURRENT_ROOM_RESPONSE":
 	    		int room = Integer.parseInt(payload[1]);
 	    		AppState.setRoom(room);

@@ -48,6 +48,7 @@ public class ClientHandler {
     	    	case "CURRENT_ROOM":
     				sendMessage("CURRENT_ROOM_RESPONSE__" + roomId + "__");
     				break;
+    			// CREAT_ROOM__duc__
         		case "CREATE_ROOM":
         			name = payload[1];
         			roomId = Server.createRoom(client, name);
@@ -67,6 +68,10 @@ public class ClientHandler {
         				Server.leaveRoom(client, roomId);
         				roomId = 0;
         			}
+        			break;
+        		// GET_PLAYERS__
+        		case "GET_PLAYERS":
+        			sendMessage("GET_PLAYERS_RESPONSE__" + Server.getPlayers(roomId) + "__");
         			break;
     			// BROADCAST__abc__
         		case "BROADCAST":

@@ -55,7 +55,6 @@ public class Player {
 	public Player(String address, String name) {
 		 this.name = name;
 		 this.address = address;
-		 this.health = 2;
 	}
 	
 	public int getX() {

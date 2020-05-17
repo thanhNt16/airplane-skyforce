@@ -24,6 +24,7 @@ public class Room {
 	}
 	
 	public void start() {
+		reset();
 		isRunning = true;
 		game.start();
 	}
@@ -48,6 +49,12 @@ public class Room {
 	
 	public List<Player> getPlayers() {
 		return players;
+	}
+	
+	public void reset() {
+		for (Player player : players) {
+			player.setHealth(3);
+		}
 	}
 	
 	public void performAction(String address, String action) {
