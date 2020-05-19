@@ -38,7 +38,7 @@ public class ClientHandler {
     		String[] payload = message.split("__");
         	String command = payload[0];
         	String name;
-
+        	
         	switch (command) {
         		// GET_ROOM__
     	    	case "GET_ROOM":

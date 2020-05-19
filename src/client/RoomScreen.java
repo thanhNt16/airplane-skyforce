@@ -76,7 +76,6 @@ public class RoomScreen extends JPanel implements ActionListener {
         }  
 	}
 	public void startGame() {
-		Client.handler.sendMessage("CREATE_ROOM__" + AppState.getName() + "__");
 		ScreenManager.getInstance().navigate(INGAME_SCREEN);
 	}
 
