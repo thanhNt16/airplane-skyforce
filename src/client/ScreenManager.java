@@ -68,13 +68,7 @@ public class ScreenManager {
 					ingameScreen = new IngameScreen(IN_GAME_SCREEN_WIDTH, IN_GAME_SCREEN_HEIGHT);
 				}
 				window.getContentPane().add(ingameScreen);
-//				ingameScreen.renderCanvas();
-//				try {
-//					Thread.sleep(500);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//				Client.handler.sendMessage("START_GAME__");
+				ingameScreen.renderStartBtn();
 		}
 
 		window.revalidate();

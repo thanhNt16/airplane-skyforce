@@ -34,10 +34,6 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
 	private JButton startGameBtn;
     
     public IngameScreen(int width, int height) {
-    	startGameBtn = new JButton("Start");
-    	startGameBtn.addActionListener(this);
-    	add(startGameBtn);
-    	
         setSize(width, height);
         setVisible(true);
 
@@ -45,6 +41,12 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
 
         ScreenManager.getInstance().getWindow().addKeyListener(this);
         ScreenManager.getInstance().getWindow().setFocusable(true);
+    }
+    
+    public void renderStartBtn() {
+    	startGameBtn = new JButton("Start");
+    	startGameBtn.addActionListener(this);
+    	add(startGameBtn);
     }
     
     private void renderCanvas() {

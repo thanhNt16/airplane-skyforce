@@ -86,7 +86,6 @@ public class ClientHandler {
         			break;
         		// GAME__*
         		case "GAME":
-//        			System.out.println(message);
         			String action = payload[1];
         			Server.getRoom(roomId).performAction(client, action);
         			break;

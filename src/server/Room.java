@@ -15,7 +15,6 @@ public class Room {
 	public Room(int id) {
 		super();
 		this.id = id;
-		game = new GameSetup(id);
 		this.players = new ArrayList<Player>();
 	}
 	
@@ -25,6 +24,7 @@ public class Room {
 	
 	public void start() {
 		reset();
+		game = new GameSetup(id);
 		isRunning = true;
 		game.start();
 	}
@@ -54,6 +54,7 @@ public class Room {
 	public void reset() {
 		for (Player player : players) {
 			player.setHealth(3);
+			player.setScore(0);
 		}
 	}
 	
