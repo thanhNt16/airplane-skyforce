@@ -7,8 +7,6 @@ public class GameSetup implements Runnable {
 	private boolean running;
 	
 	private GameManager manager;
-	public static final int gameWidth = 400;
-	public static final int gameHeight = 400;
 	
 	private int roomId;
 	

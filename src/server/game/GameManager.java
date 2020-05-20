@@ -3,6 +3,9 @@ package server.game;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static common.Constants.GAME_HEIGHT;
+import static common.Constants.GAME_WIDTH;
+
 import server.Server;
 
 
@@ -25,8 +28,8 @@ public class GameManager {
 	
 	public void init() {
 		for (Player player : Server.getRoom(roomId).getPlayers()) {
-			player.setX((GameSetup.gameWidth/2) + 50);
-			player.setY((GameSetup.gameHeight - 30) + 50);
+			player.setX((GAME_WIDTH / 2) + 50);
+			player.setY((GAME_HEIGHT - 30) + 50);
 			player.init(this);
 		}
 		
@@ -39,8 +42,8 @@ public class GameManager {
 	public void tick() {
 		for (Player player : Server.getRoom(roomId).getPlayers()) {
 			if (player.getGame() == null) {
-				player.setX((GameSetup.gameWidth/2) + 50);
-				player.setY((GameSetup.gameHeight - 30) + 50);
+				player.setX((GAME_WIDTH / 2) + 50);
+				player.setY((GAME_HEIGHT - 30) + 50);
 				player.init(this);
 			}
 			player.tick();

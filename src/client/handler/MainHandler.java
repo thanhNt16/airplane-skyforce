@@ -1,6 +1,6 @@
 package client.handler;
 
-import static common.Constants.HOME_SCREEN;
+import static common.Constants.ROOM_SCREEN;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -56,7 +56,7 @@ public class MainHandler implements KeyListener {
 	    		IngameScreen.flushQueue();
 				break;
 	    	case "END_GAME":
-	    		ScreenManager.getInstance().navigate(HOME_SCREEN);
+	    		ScreenManager.getInstance().navigate(ROOM_SCREEN);
 	    		break;
 	    	case "GET_ROOM_RESPONSE":
 	    		ArrayList<Integer> roomList = new ArrayList<Integer>();

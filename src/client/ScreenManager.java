@@ -10,6 +10,10 @@ import static common.Constants.*;
 public class ScreenManager {
 	private static ScreenManager instance;
 	private JFrame window;
+	private PrepareScreen prepareScreen;
+	private HomeScreen homeScreen;
+	private RoomScreen roomScreen;
+	private IngameScreen ingameScreen;
 
 	private ScreenManager() {
 		window = new JFrame("Skyforce");
@@ -41,20 +45,36 @@ public class ScreenManager {
 		window.getContentPane().removeAll();
 
 		switch (screenName) {
-		case PREPARE_SCREEN:
-			window.getContentPane().add(new PrepareScreen(SCREEN_WIDTH, SCREEN_HEIGHT));
-			break;
-		case HOME_SCREEN:
-			window.getContentPane().add(new HomeScreen(SCREEN_WIDTH, SCREEN_HEIGHT));
-			break;
-		case ROOM_SCREEN:
-			window.getContentPane().add(new RoomScreen(SCREEN_WIDTH, SCREEN_HEIGHT));
-			break;
-		case INGAME_SCREEN:
-			window.getContentPane().add(getIngameScreen());
-//          case WAITING_ROOM_SCREEN:
-//              window.getContentPane().add( new WaitingRoomScreen(SCREEN_WIDTH, SCREEN_HEIGHT));
-//              break;
+			case PREPARE_SCREEN:
+				if (prepareScreen == null) {
+					prepareScreen = new PrepareScreen(SCREEN_WIDTH, SCREEN_HEIGHT);
+				}
+				window.getContentPane().add(prepareScreen);
+				break;
+			case HOME_SCREEN:
+				if (homeScreen == null) {
+					homeScreen = new HomeScreen(SCREEN_WIDTH, SCREEN_HEIGHT);
+				}
+				window.getContentPane().add(homeScreen);
+				break;
+			case ROOM_SCREEN:
+				if (roomScreen == null) {
+					roomScreen = new RoomScreen(SCREEN_WIDTH, SCREEN_HEIGHT);
+				}
+				window.getContentPane().add(roomScreen);
+				break;
+			case INGAME_SCREEN:
+				if (ingameScreen == null) {
+					ingameScreen = new IngameScreen(IN_GAME_SCREEN_WIDTH, IN_GAME_SCREEN_HEIGHT);
+				}
+				window.getContentPane().add(ingameScreen);
+//				ingameScreen.renderCanvas();
+//				try {
+//					Thread.sleep(500);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//				Client.handler.sendMessage("START_GAME__");
 		}
 
 		window.revalidate();
@@ -63,9 +83,5 @@ public class ScreenManager {
 
 	public JFrame getWindow() {
 		return this.window;
-	}
-
-	private synchronized JPanel getIngameScreen() {
-		return new IngameScreen(IN_GAME_SCREEN_WIDTH, IN_GAME_SCREEN_HEIGHT);
 	}
 }

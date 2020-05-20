@@ -1,6 +1,8 @@
 package server.game;
 
 import server.Server;
+import static common.Constants.GAME_HEIGHT;
+import static common.Constants.GAME_WIDTH;
 
 public class Player {
 	private int x;
@@ -110,13 +112,13 @@ public class Player {
 	public void tick() {
 		if (!(health <= 0)) {
 			if (left) {
-				if (x >= 60) {
+				if (x >= 50) {
 					x -= 4;	
 				}
 
 			}
 			if (right) {
-				if (x <= 450 - 40) {
+				if (x <= GAME_WIDTH - 50) {
 					x += 4;	
 				}
 			}
@@ -127,7 +129,7 @@ public class Player {
 
 			}
 			if (down) {
-				if (y <= 600 - 40) {
+				if (y <= GAME_HEIGHT + 20) {
 					y += 4;	
 				}
 			}
