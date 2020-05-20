@@ -166,6 +166,12 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
 		if (source == KeyEvent.VK_RIGHT) {
 			Client.handler.sendMessage("GAME__RIGHT__");
 		}
+		if (source == KeyEvent.VK_UP) {
+			Client.handler.sendMessage("GAME__UP__");
+		}
+		if (source == KeyEvent.VK_DOWN) {
+			Client.handler.sendMessage("GAME__DOWN__");
+		}
 		if (source == KeyEvent.VK_SPACE) {
 			Client.handler.sendMessage("GAME__SPACE__");
 		}
@@ -179,6 +185,12 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
 		}
 		if (source == KeyEvent.VK_RIGHT) {
 			Client.handler.sendMessage("GAME__NOT_RIGHT__");
+		}
+		if (source == KeyEvent.VK_UP) {
+			Client.handler.sendMessage("GAME__NOT_UP__");
+		}
+		if (source == KeyEvent.VK_DOWN) {
+			Client.handler.sendMessage("GAME__NOT_DOWN__");
 		}
 		if (source == KeyEvent.VK_SPACE) {
 			Client.handler.sendMessage("GAME__NOT_SPACE__");

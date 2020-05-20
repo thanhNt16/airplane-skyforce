@@ -73,6 +73,18 @@ public class Room {
 					case "NOT_RIGHT":
 						player.setRight(false);
 						break;
+					case "UP":
+						player.setUp(true);
+						break;
+					case "NOT_UP":
+						player.setUp(false);
+						break;
+					case "DOWN":
+						player.setDown(true);
+						break;
+					case "NOT_DOWN":
+						player.setDown(false);
+						break;
 					case "SPACE":
 						player.setFire(true);
 						break;

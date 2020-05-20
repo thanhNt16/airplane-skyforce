@@ -9,6 +9,9 @@ public class Player {
 	private int score;
 	private boolean left;
 	private boolean right;
+	private boolean up;
+	private boolean down;
+
 	private boolean fire;
 	
 	private long current;
@@ -19,6 +22,22 @@ public class Player {
 	private String address;
 	
 	private GameManager game;
+	
+	public boolean isUp() {
+		return up;
+	}
+
+	public void setUp(boolean up) {
+		this.up = up;
+	}
+
+	public boolean isDown() {
+		return down;
+	}
+
+	public void setDown(boolean down) {
+		this.down = down;
+	}
 	
 	public GameManager getGame() {
 		return game;
@@ -99,6 +118,17 @@ public class Player {
 			if (right) {
 				if (x <= 450 - 40) {
 					x += 4;	
+				}
+			}
+			if (up) {
+				if (y >= 60) {
+					y -= 4;	
+				}
+
+			}
+			if (down) {
+				if (y <= 600 - 40) {
+					y += 4;	
 				}
 			}
 			if (fire) {

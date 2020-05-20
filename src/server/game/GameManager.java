@@ -56,7 +56,8 @@ public class GameManager {
 				Random rand = new Random();
 				int randX = rand.nextInt(450);
 				int randY = rand.nextInt(450);
-				enemies.add(new Enemy(randX, -randY));
+				int randSpeed = rand.nextInt(9) + 1;
+				enemies.add(new Enemy(randX, -randY, randSpeed));
 			}
 			current = System.nanoTime();
 		}
