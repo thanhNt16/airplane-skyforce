@@ -25,7 +25,7 @@ public class HomeScreen extends JPanel implements ActionListener {
     
     private JLabel titleLb;
     private JList<String> roomList;
-    private DefaultListModel<String> rooms = new DefaultListModel<String>();;
+    private DefaultListModel<String> rooms = new DefaultListModel<String>();
 
     public HomeScreen(int width, int height) {
         setSize(width, height);
