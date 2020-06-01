@@ -22,6 +22,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 	private JButton createGameBtn;
     private JButton joinGameBtn;
     private JButton backBtn;
+    
     private JLabel titleLb;
     private JList<String> roomList;
     private DefaultListModel<String> rooms = new DefaultListModel<String>();;
@@ -46,6 +47,7 @@ public class HomeScreen extends JPanel implements ActionListener {
         backBtn.setBounds(60, 20, 80, 40);
         backBtn.setFont(new Font(NORMAL_FONT, Font.PLAIN, 12));
         
+        
         refreshBtn.setBounds(250, 320, 150, 50);
         refreshBtn.setFont(new Font(NORMAL_FONT, Font.PLAIN, 14));
         createGameBtn.setBounds(440, 320, 150, 50);
@@ -59,6 +61,8 @@ public class HomeScreen extends JPanel implements ActionListener {
         createGameBtn.addActionListener(this);
         joinGameBtn.addActionListener(this);
         backBtn.addActionListener(this);
+        refreshBtn.addActionListener(this);
+
         
         roomList = new JList<String>(rooms);
     	roomList.setBorder(BorderFactory.createLineBorder(Color.black));
