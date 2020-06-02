@@ -10,11 +10,13 @@ public class LoadImage {
 	public static BufferedImage player;
 	public static BufferedImage enemy;
 	public static BufferedImage entities;
+	public static BufferedImage bullet;
 	
 	public static void init() {
-		image = imageLoader("/white.jpg");
-		player = imageLoader("/player.jpg");
+		image = imageLoader("/night.png");
+		player = imageLoader("/plane.png");
 		entities = imageLoader("/airplane.png");
+		bullet = imageLoader("/bullet.png");
 		crop();
 	}
 	

@@ -83,8 +83,9 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
 		    	case "BULLET":
 		    		x = Integer.parseInt(payload[1]);
 		    		y = Integer.parseInt(payload[2]);
-		    		g.setColor(Color.red);
-		    		g.fillRect(x, y, 6, 10);
+//		    		g.setColor(Color.red);
+		    		g.drawImage(LoadImage.bullet, x, y, 6, 10, null);
+//		    		g.fillRect(x, y, 6, 10);
 					break;
 				// ENEMY__10__20__
 		    	case "ENEMY":
@@ -99,7 +100,7 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
 		    		y = Integer.parseInt(payload[2]);
 		    		g.setColor(Color.red);
 		    		g.drawImage(LoadImage.player, x, y, 25, 25, null);
-		    		g.setColor(Color.blue);
+		    		g.setColor(Color.white);
 					g.setFont(new Font("arial", Font.BOLD, 8));
 					g.drawString(payload[4], x, y);
 					break;
@@ -143,7 +144,7 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
 		Collections.sort(players);
 		Collections.reverse(players);
 		for (PlayerInfo p : players) {
-			g.setColor(Color.blue);
+			g.setColor(Color.white);
     		g.setFont(new Font("arial", Font.BOLD, 12));
     		g.drawString(p.getName() + "- score: " + p.getScore() + ", health: " + p.getHealth(), 70, startY);
     		startY += 20;
