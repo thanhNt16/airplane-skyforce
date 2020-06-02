@@ -39,6 +39,10 @@ public class PlayerInfo implements Comparable<PlayerInfo> {
 
 	@Override
 	public int compareTo(PlayerInfo info) {
-		return this.score - info.getScore();
+		int cmpScore = this.score - info.getScore();
+		if (cmpScore != 0) {
+			return cmpScore;
+		}
+		return this.name.compareTo(info.getName());
 	}
 }
