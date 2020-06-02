@@ -57,8 +57,8 @@ public class GameManager {
 		if (breaks > delay) {
 			for (int i = 0 ; i < 2; i++) {
 				Random rand = new Random();
-				int randX = rand.nextInt(450);
-				int randY = rand.nextInt(450);
+				int randX = rand.nextInt(GAME_WIDTH);
+				int randY = rand.nextInt(GAME_WIDTH);
 				int randSpeed = rand.nextInt(9) + 1;
 				enemies.add(new Enemy(randX, -randY, randSpeed));
 			}
