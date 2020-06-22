@@ -15,6 +15,9 @@ public class GameManager {
 	
 	private long delay;
 	private long current;
+	private int level;
+	private long levelCurrentTime;
+	private long levelDelay;
 	
 	private int roomId;
 	
@@ -37,9 +40,13 @@ public class GameManager {
 		enemies = new ArrayList<Enemy>();
 		current = System.nanoTime();
 		delay = 800;
+		level = 1;
+		levelCurrentTime = System.nanoTime();
+		levelDelay = 10000;
 	}
 	
 	public void tick() {
+		// players
 		for (Player player : Server.getRoom(roomId).getPlayers()) {
 			if (player.getGame() == null) {
 				player.setX((GAME_WIDTH / 2) + 50);
@@ -49,17 +56,28 @@ public class GameManager {
 			player.tick();
 		}
 		
+		// bullets
 		for (Bullet bu : bullets) {
             bu.tick();
         }
 
+		// random enemy
 		long breaks = (System.nanoTime() - current) / 1000000;
+		long levelBreak = (System.nanoTime() - levelCurrentTime) / 1000000;
+		if (levelBreak > levelDelay) {
+			if (delay > 200) {
+				delay -= 50;
+			}
+			level++;
+			levelCurrentTime = System.nanoTime();
+			System.out.println("Level " + level);
+		}
 		if (breaks > delay) {
-			for (int i = 0 ; i < 2; i++) {
+			for (int i = 0 ; i < level; i++) {
 				Random rand = new Random();
 				int randX = rand.nextInt(GAME_WIDTH);
 				int randY = rand.nextInt(GAME_WIDTH);
-				int randSpeed = rand.nextInt(9) + 1;
+				int randSpeed = rand.nextInt(9) + level;
 				enemies.add(new Enemy(randX, -randY, randSpeed));
 			}
 			current = System.nanoTime();
