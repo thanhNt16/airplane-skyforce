@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -64,15 +65,7 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
     public static void pushToQueue(String message) {
 		queue.add(message);
 	}
-    private static int getRandomNumberInRange(int min, int max) {
-
-		if (min >= max) {
-			throw new IllegalArgumentException("max must be greater than min");
-		}
-
-		Random r = new Random();
-		return r.nextInt((max - min) + 1) + min;
-	}
+   
 	public static void flushQueue() {
 		if (buffer == null) {
 			canvas.createBufferStrategy(3);
@@ -105,11 +98,15 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
 					break;
 				// PLAYER__10__20__localhost:8000__duc__0__
 		    	case "PLAYER":
-		    		int index = getRandomNumberInRange(1,4);
 		    		x = Integer.parseInt(payload[1]);
 		    		y = Integer.parseInt(payload[2]);
+		    		int index = Integer.parseInt(payload[5]);
 		    		g.setColor(Color.red);
-		    		g.drawImage(LoadImage.player1, x, y, 25, 25, null);
+					try {
+						g.drawImage((BufferedImage) LoadImage.class.getField("player" + (index % 4 + 1)).get(null), x, y, 25, 25, null);
+					} catch (Exception e) {
+						g.drawImage(LoadImage.player1, x, y, 25, 25, null);
+					}
 		    		g.setColor(Color.white);
 					g.setFont(new Font("arial", Font.BOLD, 8));
 					g.drawString(payload[4], x, y);
