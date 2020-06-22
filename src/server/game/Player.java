@@ -20,7 +20,6 @@ public class Player {
 	private long delay;
 	
 	private String name;
-
 	private String address;
 	
 	private GameManager game;
@@ -143,9 +142,9 @@ public class Player {
 			}
 		}
 	}
-	public void broadcast(int room) {
+	public void broadcast(int room, int index) {
 		if (health > 0) {
-			String message = "PLAYER__" + x + "__" + y + "__" + address + "__" + name + "__";
+			String message = "PLAYER__" + x + "__" + y + "__" + address + "__" + name + "__" + index + "__";
 			Server.broadcastToRoom(room, message);
 		}
 	}

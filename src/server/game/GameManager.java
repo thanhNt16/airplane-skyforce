@@ -91,9 +91,10 @@ public class GameManager {
 	
 	public void broadcast() {
 		boolean ended = true;
+		int index = 0;
 		for (Player player : Server.getRoom(roomId).getPlayers()) {	
 			if (player.getHealth() > 0) {
-				player.broadcast(roomId);
+				player.broadcast(roomId, index++);
 				ended = false;
 			}
 		}

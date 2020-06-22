@@ -94,7 +94,7 @@ public class IngameScreen extends JPanel implements ActionListener, KeyListener 
 		    		g.setColor(Color.black);
 		    		g.drawImage(LoadImage.enemy, x, y, 25, 25, null);
 					break;
-				// PLAYER__10__20__localhost:8000__duc__
+				// PLAYER__10__20__localhost:8000__duc__0__
 		    	case "PLAYER":
 		    		x = Integer.parseInt(payload[1]);
 		    		y = Integer.parseInt(payload[2]);
